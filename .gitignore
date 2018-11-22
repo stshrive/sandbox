@@ -9,3 +9,4 @@ ipch/
 *.tlog
 Release/
 Debug/
+desktop.ini
