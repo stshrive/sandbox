@@ -68,7 +68,6 @@ void NewGame();
 void EnemyTurn();
 bool Setup(Ship * ships[]);
 void MoveShip(Ship * ship, int map[][11], Movement movement);
-void Highlight(POINT pointValue);//highlight the area selected by the mouse
 void DrawTile(BitMapObj &BmoDestination, BitMapObj &BmoSource, int x, int y, int TILE);
 void RenderMap();
 void mCreateButton_xy(mButton &button, int x, int y);
@@ -416,17 +415,17 @@ inline POINT FindBitMapPos(int TILE)
 	return pos;
 }
 
-bool LaunchMissile(int Map[][11], XY position)
+AttackResult LaunchMissile(int Map[][11], XY position)
 {
     if (Map[position.y+1][position.x+1] != WATER)
     {
         PlayerPosGrid[position.y+1][position.x+1] += 80;
-        return true;
+        return AttackResult::Hit;
     }
     else
     {
         PlayerPosGrid[position.y+1][position.x+1] = MISS;
-        return false;
+        return AttackResult::Miss;
     }
 }
 
@@ -434,7 +433,8 @@ void EnemyTurn()
 {
 	BtlShpOp->Update();
     XY choice = BtlShpOp->GetChoice();
-    /*BtlShipOp->ReadResult(*/LaunchMissile(PlayerPosGrid, choice)/*)*/;
+    LaunchMissile(PlayerPosGrid, choice);
+    //BtlShipOp->ReadResult(LaunchMissile(PlayerPosGrid, choice));
 
 	RenderMap();
 
