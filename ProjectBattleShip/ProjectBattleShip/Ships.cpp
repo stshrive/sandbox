@@ -1,5 +1,61 @@
 #include"Ships.h"
 
+int Ship::GetSize()
+{
+    return this->size;
+}
+
+bool Ship::GetSunkStatus(int PlacementGrid[][11])
+{
+
+    if (this->GetPositionedStatus())
+    {
+        long start_p;
+        long end_p;
+
+        if (this->GetDirection() == VERTICAL)
+        {
+            start_p = min(this->getpos().tl.y, this->getpos().tl.y);
+            end_p = max(this->getpos().tl.y, this->getpos().tl.y);
+        }
+        else
+        {
+            start_p = min(this->getpos().tl.x, this->getpos().tl.x);
+            end_p = max(this->getpos().tl.x, this->getpos().tl.x);
+        }
+
+        for (long point = start_p; point <= end_p; point++)
+        {
+            int id = 0;
+            if (this->GetDirection() == VERTICAL)
+            {
+                id = PlacementGrid[point][this->getpos().tl.x];
+            }
+            else
+            {
+                id = PlacementGrid[this->getpos().tl.y][point];
+            }
+
+            bool found = false;
+            for (int i = 0; i < 4 && !found; i++)
+            {
+                for (int j = 0; j < this->GetSize() && !found; j++)
+                {
+                    if (id == this->Graphic[i][j])
+                        found = true;
+                }
+            }
+
+            if (!found) return false;
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 Carrier::Carrier()
 {
 	Source.Load(NULL, (LPCSTR) "tiles3.bmp");

@@ -26,9 +26,12 @@ public:
 	virtual void SetPositionedStatus() = 0;
 	virtual bool GetPositionedStatus() = 0;
 	virtual bool GetDirection() = 0;
-	//virtual bool GetSunkStatus() = 0;
+	virtual bool GetSunkStatus(int PlacementGrid[][11]);
 	virtual Position& getpos() = 0;
-
+    virtual int GetSize();
+protected:
+    int size;
+    int Graphic[1][1];
 };
 
 class Carrier : public Ship
@@ -43,7 +46,6 @@ public:
 	virtual void SetPositionedStatus();
 	virtual bool GetPositionedStatus();
 	virtual bool GetDirection();
-	//virtual bool GetSunkStatus();
 	virtual Position& getpos();
 private:
 	class Plane
@@ -73,7 +75,6 @@ public:
 	virtual void SetPositionedStatus();
 	virtual bool GetPositionedStatus();
 	virtual bool GetDirection();
-	//virtual bool GetSunkStatus();
 	virtual Position& getpos();
 private:
 	Position pos;
@@ -97,7 +98,6 @@ public:
 	virtual void SetPositionedStatus();
 	virtual bool GetPositionedStatus();
 	virtual bool GetDirection();
-	//virtual bool GetSunkStatus();
 	virtual Position& getpos();
 private:
 	Position pos;
@@ -121,7 +121,6 @@ public:
 	virtual void SetPositionedStatus();
 	virtual bool GetPositionedStatus();
 	virtual bool GetDirection();
-	//virtual bool GetSunkStatus();
 	virtual Position& getpos();
 private:
 	Position pos;
@@ -145,7 +144,6 @@ public:
 	virtual void SetPositionedStatus();
 	virtual bool GetPositionedStatus();
 	virtual bool GetDirection();
-	//virtual bool GetSunkStatus();
 	virtual Position& getpos();
 private:
 	Position pos;
