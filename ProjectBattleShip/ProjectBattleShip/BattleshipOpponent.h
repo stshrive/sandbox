@@ -22,6 +22,13 @@ class AI;
 //Normal
 //Hard
 
+enum AttackResult
+{
+      Miss = 0
+    , Hit  = 1
+    , Sunk = 2
+};
+
 class BattleShipOpponent : public BaseEntity
 {
 private:
@@ -41,7 +48,7 @@ public:
     virtual ~BattleShipOpponent();
 
 	void CheckProbability();
-    void ReadResult(bool result);
+    void ReadResult(AttackResult result);
 
     virtual void Update();
     virtual XY GetChoice();

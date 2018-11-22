@@ -86,6 +86,10 @@ void BattleShipOpponent::CheckProbability()
 	
 }
 
+void BattleShipOpponent::ReadResult(AttackResult result)
+{
+}
+
 void BattleShipOpponent::Update()
 {
     std::vector<XY>::size_type previous = this->m_sPreviousAttacks.size();
