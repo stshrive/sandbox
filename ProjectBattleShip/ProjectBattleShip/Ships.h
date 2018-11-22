@@ -15,23 +15,40 @@ struct Position
 #define VERTICAL 1
 #define HORIZONTAL 0
 
+class Plane
+{
+public:
+    void Scout();
+    void Return();
+};
+
 class Ship 
 {
 public:
-	virtual void SpecialAttack() = 0;
-	virtual void SpecialAction() = 0;
-	virtual void initialize(int PlacementGrid[][11]) = 0;
-	virtual void Rotate(int PlacementGrid[][11]) = 0;
-	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]) = 0;
-	virtual void SetPositionedStatus() = 0;
-	virtual bool GetPositionedStatus() = 0;
-	virtual bool GetDirection() = 0;
-	virtual bool GetSunkStatus(int PlacementGrid[][11]);
-	virtual Position& getpos() = 0;
-    virtual int GetSize();
+    Ship(int size, int graphic_base);
+    virtual ~Ship();
+	virtual void Initialize(int PlacementGrid[][11]);
+	virtual void Rotate(int PlacementGrid[][11]);
+	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
+	virtual void SetPositionedStatus();
+	virtual bool GetPositionedStatus() const;
+	virtual bool GetDirection() const;
+	virtual bool GetSunkStatus(int PlacementGrid[][11]) const;
+	virtual Position const & GetPos() const;
+    virtual int const GetSize() const;
+
+    virtual void SpecialAttack() = 0;
+    virtual void SpecialAction() = 0;
+
 protected:
     int size;
-    int Graphic[1][1];
+    int graphic_base;
+    Position pos;
+    BitMapObj Source;
+    bool positioned;
+    bool vertical;
+    int NWSE;
+    int * SourceIds[4];
 };
 
 class Carrier : public Ship
@@ -40,27 +57,6 @@ public:
 	Carrier();
 	virtual void SpecialAttack();
 	virtual void SpecialAction();
-	virtual void initialize(int PlacementGrid[][11]);
-	virtual void Rotate(int PlacementGrid[][11]);
-	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
-	virtual void SetPositionedStatus();
-	virtual bool GetPositionedStatus();
-	virtual bool GetDirection();
-	virtual Position& getpos();
-private:
-	class Plane
-	{
-	public:
-		void Scout();
-		void Return();
-	};
-	Position pos;
-	BitMapObj Source;
-	bool positioned;
-	bool vertical;
-	int Graphic[4][5];
-	int NWSE;
-	bool SunkStatus;
 };
 
 class BattleShip : public Ship
@@ -69,21 +65,6 @@ public:
 	BattleShip();
 	virtual void SpecialAttack();
 	virtual void SpecialAction();
-	virtual void initialize(int PlacementGrid[][11]);
-	virtual void Rotate(int PlacementGrid[][11]);
-	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
-	virtual void SetPositionedStatus();
-	virtual bool GetPositionedStatus();
-	virtual bool GetDirection();
-	virtual Position& getpos();
-private:
-	Position pos;
-	BitMapObj Source;
-	bool positioned;
-	bool vertical;
-	int Graphic[4][4];
-	int NWSE;
-	bool SunkStatus;
 };
 
 class Destroyer : public Ship
@@ -92,21 +73,6 @@ public:
 	Destroyer();
 	virtual void SpecialAttack();
 	virtual void SpecialAction();
-	virtual void initialize(int PlacementGrid[][11]);
-	virtual void Rotate(int PlacementGrid[][11]);
-	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
-	virtual void SetPositionedStatus();
-	virtual bool GetPositionedStatus();
-	virtual bool GetDirection();
-	virtual Position& getpos();
-private:
-	Position pos;
-	BitMapObj Source;
-	bool positioned;
-	bool vertical;
-	int Graphic[4][3];
-	int NWSE;//North West South East 0,1,2,3
-	bool SunkStatus;
 };
 
 class Submarine : public Ship
@@ -115,21 +81,6 @@ public:
 	Submarine();
 	virtual void SpecialAttack();
 	virtual void SpecialAction();
-	virtual void initialize(int PlacementGrid[][11]);
-	virtual void Rotate(int PlacementGrid[][11]);
-	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
-	virtual void SetPositionedStatus();
-	virtual bool GetPositionedStatus();
-	virtual bool GetDirection();
-	virtual Position& getpos();
-private:
-	Position pos;
-	BitMapObj Source;
-	bool positioned;
-	bool vertical;
-	int Graphic[4][3];
-	int NWSE;
-	bool SunkStatus;
 };
 
 class Patroller : public Ship
@@ -138,22 +89,6 @@ public:
 	Patroller();
 	virtual void SpecialAttack();
 	virtual void SpecialAction();
-	virtual void initialize(int PlacementGrid[][11]);
-	virtual void Rotate(int PlacementGrid[][11]);
-	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
-	virtual void SetPositionedStatus();
-	virtual bool GetPositionedStatus();
-	virtual bool GetDirection();
-	virtual Position& getpos();
-private:
-	Position pos;
-	BitMapObj Source;
-	bool positioned;
-	bool vertical;
-	int Graphic[4][2];
-	int NWSE;
-	bool SunkStatus;
 };
-
 
 #endif

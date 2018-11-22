@@ -11,14 +11,12 @@ BitMapObj::BitMapObj()
 
 BitMapObj::~BitMapObj()
 {
-	if(hdcMemory)
-		Destroy();
+	Destroy();
 }
 
 void BitMapObj::Load(HDC hdcCompatible, LPCTSTR filename)
 {
-	if(hdcMemory)
-		Destroy();
+	Destroy();
 
 	hdcMemory = CreateCompatibleDC(hdcCompatible);
 	current_new = (HBITMAP)LoadImage(NULL, filename, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -33,8 +31,7 @@ void BitMapObj::Load(HDC hdcCompatible, LPCTSTR filename)
 
 void BitMapObj::Create(HDC hdcCompatible, int height, int width)
 {
-	if(hdcMemory)
-		Destroy();
+	Destroy();
 
 	hdcMemory = CreateCompatibleDC(hdcCompatible);
 	current_new = CreateCompatibleBitmap(hdcCompatible, width, height);
@@ -47,15 +44,18 @@ void BitMapObj::Create(HDC hdcCompatible, int height, int width)
 
 void BitMapObj::Destroy()
 {
-	SelectObject(hdcMemory, old);
-	DeleteObject(current_new);
-	DeleteDC(hdcMemory);
+    if (hdcMemory)
+    {
+        SelectObject(hdcMemory, old);
+        DeleteObject(current_new);
+        DeleteDC(hdcMemory);
 
-	hdcMemory = NULL;
-	current_new = NULL;
-	old = NULL;
-	bmHeight = 0;
-	bmWidth = 0;
+        hdcMemory = NULL;
+        current_new = NULL;
+        old = NULL;
+        bmHeight = 0;
+        bmWidth = 0;
+    }
 }
 
 int BitMapObj::getHeight()

@@ -347,7 +347,7 @@ bool Setup(Ship * ships[])
     if (ShipId == -1)
     {
         ShipId = 0;
-        ships[ShipId]->initialize(PlayerPosGrid);
+        ships[ShipId]->Initialize(PlayerPosGrid);
     }
 
     if (ships[ShipId]->GetPositionedStatus())
@@ -367,7 +367,7 @@ bool Setup(Ship * ships[])
             }
             return true;
         }
-        ships[ShipId]->initialize(PlayerPosGrid); 
+        ships[ShipId]->Initialize(PlayerPosGrid); 
     }
 
     RenderMap();
