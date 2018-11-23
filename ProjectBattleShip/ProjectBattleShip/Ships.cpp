@@ -71,7 +71,7 @@ void Ship::Initialize(int PlacementGrid[][11])
                         continue;
                     }
                 }
-                if (i <= 6)
+                if (i <= this->size+1)
                 {
                     int I = i, k;
                     pos.tl.x = j;
@@ -141,8 +141,10 @@ void Ship::Rotate(int PlacementGrid[][11])
         temp = pos.tl;
         pos.tl = pos.br;
         pos.br = temp;
+
         for (int i = x - lower_pivot; i <= a + upper_pivot; i++)
             PlacementGrid[y - max(lower_pivot, upper_pivot)][i] = WATER;
+        
         int i = b, oi = i;
         NWSE = (NWSE + 1) % 4;
         for (int i = b; i <= y; i++) {
