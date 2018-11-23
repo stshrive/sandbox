@@ -125,10 +125,10 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 				while(LOWORD(wParam) != GridButtons[i][j].ID)
 				{
 					i++;
-					if(i%10 == 0)
+					if(i % BOARDSIZE == 0)
 						j++;
-					i%=10;
-					j%=10;
+					i %= BOARDSIZE;
+					j %= BOARDSIZE;
 				}
 				AttackGrid[GridButtons[i][j].yCoordinate+1][GridButtons[i][j].xCoordinate+1] = HIT;
 				SendMessage(GridButtons[i][j].Button,BM_SETIMAGE,(WPARAM)IMAGE_BITMAP,TRANSPARENT);
@@ -175,10 +175,10 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 				while(LOWORD(lParam) != GridButtons[i][j].ID)
 				{
 					i++;
-					if(i%10 == 0)
+					if(i % BOARDSIZE == 0)
 						j++;
-					i%=10;
-					j%=10;
+					i %= BOARDSIZE;
+					j %= BOARDSIZE;
 				}
 				BtnHdc = BeginPaint(GridButtons[i][j].Button,&BtnPaint);
 				BitBlt(BtnHdc,0,0,TILESIZE,TILESIZE,Source,0,0,SRCAND);
@@ -410,8 +410,8 @@ inline POINT FindBitMapPos(int TILE)
 {
 	POINT pos;
 	pos.x = 0, pos.y = 0;
-	pos.x = (TILE%10)*TILESIZE;
-	pos.y = (TILE/10)*TILESIZE;
+	pos.x = (TILE % BOARDSIZE) * TILESIZE;
+	pos.y = (TILE / BOARDSIZE) * TILESIZE;
 	return pos;
 }
 

@@ -10,4 +10,6 @@ const int CRUISER1 = 70, CRUISER2 = 71, CRUISER3 = 72;
 const int SUBMARINE1 = 90, SUBMARINE2 = 91, SUBMARINE3 = 92;
 const int PATROLLER1 = 76, PATROLLER2 = 77;
 
+const int BOARDSIZE = 10;
+
 #endif
