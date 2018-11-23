@@ -13,8 +13,6 @@ private:
     Attack(const Attack&);
     Attack& operator=(const Attack&);
 
-public:
-    static Attack* instance();
     virtual void Enter(BattleShipOpponent* entity);
     virtual void Execute(BattleShipOpponent* entity);
     virtual void Exit(BattleShipOpponent* entity);

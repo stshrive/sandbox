@@ -1,10 +1,6 @@
 #include "SearchState.h"
-
-Search* Search::instance()
-{
-    static Search instance;
-    return &instance;
-}
+#include <vector>
+#include <random>
 
 void Search::Enter(BattleShipOpponent* entity)
 {
