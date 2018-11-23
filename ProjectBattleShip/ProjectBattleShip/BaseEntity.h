@@ -15,7 +15,6 @@ public:
 	}
 
 	virtual ~BaseEntity(){;}
-	virtual void Update()=0;
 
 	int ID()const{return m_ID;}
 };

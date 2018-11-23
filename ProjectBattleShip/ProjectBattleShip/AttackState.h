@@ -1,15 +1,20 @@
 #ifndef OPPONENT_ATTACK_STATE_H_
 #define OPPONENT_ATTACK_STATE_H_
 
-#include"ProbabilityDensity.h"
-#include"BaseState.h"
+#include"HitProbability.h"
+#include"State.h"
 
 class BattleShipOpponent;
 
+constexpr char AttackStateId[] = "AttackState";
+
 class Attack : public State<BattleShipOpponent>
 {
-private:
-    Attack() {};
+public:
+    Attack() 
+        :State(AttackStateId)
+    {}
+
     Attack(const Attack&);
     Attack& operator=(const Attack&);
 

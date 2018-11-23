@@ -1,4 +1,4 @@
-#include"_BitMapObj.h"
+#include "BitMapObj.h"
 
 BitMapObj::BitMapObj()
 {

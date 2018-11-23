@@ -1,20 +1,38 @@
 #ifndef OPPONENT_SEARCH_STATE_H_
 #define OPPONENT_SEARCH_STATE_H_
 
-#include"ProbabilityDensity.h"
-#include"BaseState.h"
+#include"HitProbability.h"
+#include"State.h"
+
+#include <vector>
 
 class BattleShipOpponent;
+
+constexpr char SearchStateId[] = "SearchState";
 
 class Search : public State<BattleShipOpponent>
 {
 private:
-    Search() {};
-    Search(const Search&);
-    Search& operator=(const Search&);
+    IProbability<int, Coordinates> * probability;
+
+    std::vector<Coordinates>::size_type Choose(
+        std::vector<Coordinates> choices);
 
 public:
-    static Search* instance();
+    Search(IProbability<int, Coordinates> * probability)
+        : State(SearchStateId)
+    {
+        this->probability = probability;
+    }
+
+    virtual ~Search()
+    {
+        if (this->probability)
+        {
+            delete this->probability;
+        }
+    }
+
     virtual void Enter(BattleShipOpponent* entity);
     virtual void Execute(BattleShipOpponent* entity);
     virtual void Exit(BattleShipOpponent* entity);

@@ -1,26 +1,19 @@
 #ifndef _SHIPS
 #define _SHIPS
 
-#pragma once
 #include<Windows.h>
-#include"_BitMapObj.h"
+#include"BitMapObj.h"
 #include"tiledefs.h"
-//#include"ShipTiles.h"
 
 struct Position
 {
 	POINT tl;//the top and left of a ship
 	POINT br;//the bottom and right of a ship
+    int Orientation;
 };
-#define VERTICAL 1
-#define HORIZONTAL 0
 
-class Plane
-{
-public:
-    void Scout();
-    void Return();
-};
+#define VERTICAL   1
+#define HORIZONTAL 0
 
 class Ship 
 {

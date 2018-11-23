@@ -1,21 +1,15 @@
 #ifndef BATTLESHIP_OPPONENT
 #define BATTLESHIP_OPPONENT
 
-#include"coord.h"
-#include"BaseEntity.h"
-#include"BaseState.h"
-#include"BattleShipStates.h"
-#include"StateMachine.h"
-#include"ProbabilityDensity.h"
-#include<stack>
-#include<queue>
-#include<vector>
+#include "coord.h"
+#include "BaseEntity.h"
+#include "State.h"
+#include <vector>
 
-using std::queue;
-using std::stack;
 using std::vector;
 
-class AI;
+template<typename owner_ty_, typename execution_ty_, typename update_ty_>
+class AIModule;
 
 enum AttackResult
 {
@@ -27,21 +21,18 @@ enum AttackResult
 class BattleShipOpponent : public BaseEntity
 {
 private:
-	StateMachine<BattleShipOpponent>* m_pStateMachine;
-	queue<XY> m_qAttackSequence;
-	vector<XY> m_sPreviousAttacks;
-    AI * ai_module;
-
-    StateMachine<BattleShipOpponent>* getStateMachine() { return m_pStateMachine; }
-    virtual void Update();
-    void CheckProbability();
+	vector<Coordinates> attack_sequence;
+    AIModule<BattleShipOpponent, Coordinates, AttackResult> * ai_module;
 
 public:
-    BattleShipOpponent(AI * ai_module, int id);
+    BattleShipOpponent(AIModule<BattleShipOpponent, Coordinates, AttackResult>  * ai_module, int id);
     virtual ~BattleShipOpponent();
 
     void ReadResult(AttackResult result);
-    virtual XY GetChoice();
+    virtual Coordinates GetChoice();
+
+    vector<Coordinates> const & GetAttackSequence();
+    void AddAttackChoice(Coordinates const & coordinate);
 };
 
 #endif

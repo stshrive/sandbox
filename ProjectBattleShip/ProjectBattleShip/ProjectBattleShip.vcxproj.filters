@@ -13,8 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\AI">
-      <UniqueIdentifier>{158205ff-d519-4b9c-b23c-f660a12ccec6}</UniqueIdentifier>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{576a933b-b9e3-4341-93e3-7d38f0bde36c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interfaces">
+      <UniqueIdentifier>{3847943d-1952-4a42-a954-cbf54077b375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Opponent">
+      <UniqueIdentifier>{89494218-e367-4a10-b275-04daf7f6288b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Opponent">
+      <UniqueIdentifier>{9e6c23fa-8070-4ca2-a6d8-5d899d34738b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,64 +36,85 @@
     <ClCompile Include="Ships.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProbabilityDensity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BattleShipOpponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BaseEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AttackState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Opponent</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleShipOpponent.cpp">
+      <Filter>Source Files\Opponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ProbabilityAI.cpp">
+      <Filter>Source Files\Opponent</Filter>
     </ClCompile>
     <ClCompile Include="SearchState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Opponent</Filter>
+    </ClCompile>
+    <ClCompile Include="OpponentStates.cpp">
+      <Filter>Source Files\Opponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HitProbability.cpp">
+      <Filter>Source Files\Opponent</Filter>
+    </ClCompile>
+    <ClCompile Include="StartState.cpp">
+      <Filter>Source Files\Opponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ships.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_BitMapObj.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SearchState.h">
+      <Filter>Header Files\Opponent</Filter>
     </ClInclude>
-    <ClInclude Include="tiledefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEntity.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseState.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleshipOpponent.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="ProbabilityDensity.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="MapComponents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="coord.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ai.h">
-      <Filter>Header Files\AI</Filter>
+    <ClInclude Include="StartState.h">
+      <Filter>Header Files\Opponent</Filter>
     </ClInclude>
     <ClInclude Include="AttackState.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="SearchState.h">
-      <Filter>Header Files\AI</Filter>
+      <Filter>Header Files\Opponent</Filter>
     </ClInclude>
     <ClInclude Include="OpponentStates.h">
-      <Filter>Header Files\AI</Filter>
+      <Filter>Header Files\Opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ProbabilityAI.h">
+      <Filter>Header Files\Opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="coord.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="tiledefs.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapComponents.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Probability.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="AIModule.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleshipOpponent.h">
+      <Filter>Header Files\Opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="BitMapObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AIStateMachine.h">
+      <Filter>Header Files\Opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HitProbability.h">
+      <Filter>Header Files\Opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Opponent.h">
+      <Filter>Header Files\Opponent</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

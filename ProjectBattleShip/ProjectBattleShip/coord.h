@@ -1,16 +1,12 @@
 #ifndef COORD_XY
 #define COORD_XY
 
-#ifndef NULL
-#define NULL 0
-#endif
-
 typedef struct Coordinates
 {
     Coordinates* operator=(int n)
     {
-        this->x = NULL;
-        this->y = NULL;
+        this->x = 0;
+        this->y = 0;
         return this;
     }
     Coordinates& operator-(int n)

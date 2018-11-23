@@ -13,9 +13,9 @@
 #include<stdlib.h>
 #include<DShow.h>
 #include"MapComponents.h"
-#include"_BitMapObj.h"
+#include"BitMapObj.h"
 #include"Ships.h"
-#include"BattleshipOpponent.h"
+#include"Opponent.h"
 
 #include<map>
 
@@ -25,17 +25,13 @@
 CHAR  WarningMessage[] = "You are about to exit the game!\nAre you sure this is what you want to do?";
 
 //The Buttons----------------------------------------------------------------
-//HWND GridButtons[GRIDSIZE-1][GRIDSIZE-1];
-//int ButtonIds[GRIDSIZE-1][GRIDSIZE-1];
 int Id = 100;//start id for the buttons
 typedef struct ButtonSpecs
 {
 	HWND Button;
-	//BitMapObj BitMap;
 	int ID;
 	int xCoordinate;
 	int yCoordinate;
-	//ButtonSpecs* _Me;
 }mButton;
 
 mButton GridButtons[GRIDSIZE-1][GRIDSIZE-1];
@@ -55,7 +51,7 @@ std::map<int, std::pair<Ship*, bool>> ships = {
     {4, std::make_pair(&PlayerPatrol, false)}
 };
 
-BattleShipOpponent* Opponent = new BattleShipOpponent(new Probability(), 1);
+BattleShipOpponent* Opponent = new BattleShipOpponent(EnemyAI, 1);
 
 //End ships---------------------------------------------------------------------------------------
 int ShipId;
