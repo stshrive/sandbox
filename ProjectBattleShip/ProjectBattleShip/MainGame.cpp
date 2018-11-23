@@ -1,11 +1,10 @@
 ///==================================================================
-///	Project Created By: Steven Shriver
-///	Date March 2012
-///	This probably wouldn't happen but if this program crashes your
-///	computer... I will not be held liable
-///	Enjoy and report all bugs/comments/ideas/fixes you come up with
-///	
-///	All rights reserved
+/// Project Created By: Steven Shriver
+/// Date March 2012
+/// This probably wouldn't happen but if this program crashes your
+/// computer... I will not be held liable
+/// Enjoy and report all bugs/comments/ideas/fixes you come up with
+///
 ///==================================================================
 
 #define WIN32_LEAN_AND_MEAN
@@ -156,11 +155,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 				}
 			}break;
 
-		//case WM_MOUSEMOVE:
-		//	{
-		//	}break;
-
-		case WM_DESTROY://--------------------------------Next Case
+		case WM_DESTROY:
 			{
 				PostQuitMessage(0);
 				return 0;;
