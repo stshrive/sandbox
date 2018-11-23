@@ -35,22 +35,17 @@ private:
 	StateMachine<BattleShipOpponent>* m_pStateMachine;
 	queue<XY> m_qAttackSequence;
 	vector<XY> m_sPreviousAttacks;
-	int  m_iParity;
-	int  m_iMaxAttacks;
-	bool m_bOverMax;
-	bool m_bHit;
     AI * ai_module;
 
     StateMachine<BattleShipOpponent>* getStateMachine() { return m_pStateMachine; }
+    virtual void Update();
+    void CheckProbability();
 
 public:
     BattleShipOpponent(AI * ai_module, int id);
     virtual ~BattleShipOpponent();
 
-	void CheckProbability();
     void ReadResult(AttackResult result);
-
-    virtual void Update();
     virtual XY GetChoice();
 };
 

@@ -9,11 +9,8 @@
 
 std::vector<XY>::size_type choose(std::vector<XY> choices);
 
-BattleShipOpponent::BattleShipOpponent(AI * ai_module, int id):BaseEntity(id),
-    m_iParity(2),
-    m_iMaxAttacks(5),
-    m_bOverMax(false),
-    m_bHit(false)
+BattleShipOpponent::BattleShipOpponent(AI * ai_module, int id)
+    : BaseEntity(id)
 {
     this->ai_module = ai_module;
     m_pStateMachine = new StateMachine<BattleShipOpponent>(this);
@@ -110,6 +107,8 @@ XY BattleShipOpponent::GetChoice()
     auto value = this->m_qAttackSequence.front();
     this->m_sPreviousAttacks.push_back(value);
     this->m_qAttackSequence.pop();
+
+    this->Update();
 
     return value;
 }
