@@ -96,7 +96,7 @@ HWND      ExitBtn       = NULL;
 
 //BitMapObjects for holding the Graphics-------------------------------------
 BitMapObj Map;
-BitMapObj AttackGridMap;
+BitMapObj OpponentPosGrid;
 BitMapObj PlayerPosGridMap;
 BitMapObj Source;
 
@@ -129,7 +129,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 					i %= BOARDSIZE;
 					j %= BOARDSIZE;
 				}
-				AttackGrid[GridButtons[i][j].yCoordinate+1][GridButtons[i][j].xCoordinate+1] = HIT;
+				OpponentGrid[GridButtons[i][j].yCoordinate+1][GridButtons[i][j].xCoordinate+1] = HIT;
 				SendMessage(GridButtons[i][j].Button,BM_SETIMAGE,(WPARAM)IMAGE_BITMAP,TRANSPARENT);
 				EnableWindow(GridButtons[i][j].Button,FALSE);
 				ShowWindow(GridButtons[i][j].Button,SW_HIDE);
@@ -316,19 +316,19 @@ void NewGame()
 		for(int j = 0; j < GRIDSIZE; j++)
 		{
 			if(i==0&&j==0){
-				AttackGrid[i][j] = MISS;
+				OpponentGrid[i][j] = MISS;
 				PlayerPosGrid[i][j] = MISS;
 			}
 			else if(i==0&&j>=1){
-				AttackGrid[i][j] = 19+j;
+				OpponentGrid[i][j] = 19+j;
 				PlayerPosGrid[i][j] = 19+j;
 			}
 			else if(j==0&&i>=1){
-				AttackGrid[i][j] = 9+i;
+				OpponentGrid[i][j] = 9+i;
 				PlayerPosGrid[i][j] = 9+i;
 			}
 			else{
-				AttackGrid[i][j] = WATER;
+				OpponentGrid[i][j] = WATER;
 				PlayerPosGrid[i][j] = WATER;
 			}
 		}
@@ -377,7 +377,7 @@ void RenderMap()
 		for(int x = 0; x < MAPWIDTH; x++)
 		{
 			if((y>2 && y<=13)&&(x>1&&x<=12))
-				MapGrid[y][x] = AttackGrid[y-3][x-2];
+				MapGrid[y][x] = OpponentGrid[y-3][x-2];
 			else if((y>2 && y<=13)&&(x>15&&x<=26))
 				MapGrid[y][x] = PlayerPosGrid[y-3][x-16];
 			else
