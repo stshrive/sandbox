@@ -24,9 +24,10 @@ void Search::Execute(BattleShipOpponent* entity)
 
             bool skip = false;
 
-            for (XY coord : entity->GetAttackSequence())
+            for (std::pair<OpponentAction, Coordinates> action
+                : entity->GetActionSequence())
             {
-                if (coord == p) skip = true;
+                if (action.second == p) skip = true;
                 if (skip) break;
             }
 
@@ -53,7 +54,7 @@ void Search::Execute(BattleShipOpponent* entity)
     Coordinates choice = choices[Choose(choices)];
     this->probability->Update(choice);
 
-    entity->AddAttackChoice(choice);
+    entity->AddAction(OpponentAction::Fire, choice);
 }
 
 void Search::Exit(BattleShipOpponent* entity)

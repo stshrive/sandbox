@@ -4,13 +4,20 @@
 #include "AIStateMachine.h"
 #include "BattleShipOpponent.h"
 
+#include <utility>
+
 class ProbabilityAI
-    : public AIStateMachine<BattleShipOpponent, Coordinates, AttackResult>
+    : public AIStateMachine
+    < BattleShipOpponent,
+      std::pair<OpponentAction, Coordinates>,
+      AttackResult>
 {
 public:
     ProbabilityAI(State<BattleShipOpponent> * start);
 
-    virtual Coordinates Execute(BattleShipOpponent *);
+    virtual std::pair<OpponentAction, Coordinates> Execute(
+        BattleShipOpponent *);
+    
     virtual void Update(AttackResult, BattleShipOpponent *);
 };
 
