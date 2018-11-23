@@ -1,10 +1,7 @@
 ///==================================================================
 /// Project Created By: Steven Shriver
 /// Date March 2012
-/// This probably wouldn't happen but if this program crashes your
-/// computer... I will not be held liable
-/// Enjoy and report all bugs/comments/ideas/fixes you come up with
-///
+/// Enjoy and feel free to report all bugs/comments/ideas/fixes
 ///==================================================================
 
 #define WIN32_LEAN_AND_MEAN
@@ -16,6 +13,7 @@
 #include"BitMapObj.h"
 #include"Ships.h"
 #include"Opponent.h"
+#include"Game.h"
 
 #include<map>
 
@@ -65,19 +63,6 @@ enum Movement
     , Right  = VK_RIGHT
     , Down   = VK_DOWN
 };
-
-//Game Functions------------------------------------------------------------
-void NewGame();
-void EnemyTurn();
-bool Setup(std::map<int, std::pair<Ship*, bool>> &ships);
-void MoveShip(Ship * ship, int map[][11], Movement movement);
-void MoveCursor(Coordinates cursor, int map[][11], Movement movement);
-void DrawTile(BitMapObj &BmoDestination, BitMapObj &BmoSource, int x, int y, int TILE);
-void RenderMap();
-void mCreateButton_xy(mButton &button, int x, int y);
-POINT FindBitMapPos(int TILE);
-bool GameInitialize();
-//End Game Functions---
 
 //Some Booleans For GamePlay
 bool SUNK = false;
@@ -159,7 +144,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 				return 0;
 			}break;
 
-		case WM_KEYDOWN://-------------------------------First Case
+		case WM_KEYDOWN:
 			{
 				if(wParam == VK_ESCAPE){
 					if(MessageBox(NULL,WarningMessage,"Leave Game?",MB_ICONEXCLAMATION|MB_YESNOCANCEL)==IDYES)
@@ -304,8 +289,8 @@ bool GameInitialize()
 	AdjustWindowRect(&tempRect, WS_BORDER | WS_SYSMENU | WS_CAPTION | WS_VISIBLE, FALSE);
 	SetWindowPos(hWndMain,
 		NULL, 0, 0,
-		tempRect.right - tempRect.left,
-		tempRect.bottom -tempRect.top,
+		tempRect.right  - tempRect.left,
+		tempRect.bottom - tempRect.top,
 		SWP_NOMOVE);
 
 	HDC hdc = GetDC(hWndMain);

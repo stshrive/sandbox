@@ -79,6 +79,7 @@
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="BattleShipOpponent.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OpponentStates.cpp" />
     <ClCompile Include="ProbabilityAI.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="AIModule.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="BaseEntity.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="BattleshipOpponent.h" />
     <ClInclude Include="Opponent.h" />
