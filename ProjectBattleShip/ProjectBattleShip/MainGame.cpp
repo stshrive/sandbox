@@ -75,6 +75,7 @@ void NewGame();
 void EnemyTurn();
 bool Setup(std::map<int, std::pair<Ship*, bool>> &ships);
 void MoveShip(Ship * ship, int map[][11], Movement movement);
+void MoveCursor(Coordinates cursor, int map[][11], Movement movement);
 void DrawTile(BitMapObj &BmoDestination, BitMapObj &BmoSource, int x, int y, int TILE);
 void RenderMap();
 void mCreateButton_xy(mButton &button, int x, int y);
@@ -107,6 +108,8 @@ BitMapObj Map;
 BitMapObj OpponentPosGrid;
 BitMapObj PlayerPosGridMap;
 BitMapObj Source;
+
+Coordinates Cursor;
 
 //The Window Procedure-------------------------------------------------------
 LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam){
@@ -155,12 +158,20 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 						DestroyWindow(hWndMain);
 					return 0;
 				}
-                else
+                else if (!GameStarted)
                 {
-                    MoveShip(ships[ShipId], PlayerPosGrid, (Movement)wParam);
+                    if (ShipId < ships.size())
+                    {
+                        MoveShip(ships[ShipId].first, PlayerPosGrid, (Movement)wParam);
+                    }
+
 					RenderMap();
 					return 0;
 				}
+                else
+                {
+                    MoveCursor(Cursor, OpponentGrid, (Movement)wParam);
+                }
 			}break;
 
 		case WM_DESTROY:
@@ -264,7 +275,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpArgs, i
 		}
 		if(GameStarted == false)
 		{
-            GameStarted = Setup(ships);
+            if ((GameStarted = Setup(ships)))
+            {
+                Cursor.x = 0;
+                Cursor.y = 0;
+            }
+
             continue;
 		}
 		if(!PLAYERTURN)
@@ -423,6 +439,25 @@ AttackResult LaunchMissile(int Map[][11], XY position)
     if (Map[position.y+1][position.x+1] != WATER)
     {
         PlayerPosGrid[position.y+1][position.x+1] += 80;
+
+        for (int i = 0; i < ships.size(); ++i)
+        {
+            if (ships[i].second)
+            {
+                continue;
+            }
+            else
+            {
+                bool sunk = ships[i].first->GetSunkStatus(PlayerPosGrid);
+
+                if (sunk)
+                {
+                    ships[i].second = sunk;
+                    return AttackResult::Sunk;
+                }
+            }
+        }
+
         return AttackResult::Hit;
     }
     else
@@ -475,3 +510,21 @@ void MoveShip(Ship * ship, int map[][11], Movement movement)
     }
 }
 
+void MoveCursor(Coordinates cursor, int map[][11], Movement movement)
+{
+    if (movement == Movement::Up)
+    {
+    }
+
+    else if (movement == Movement::Down)
+    {
+    }
+
+    else if (movement == Movement::Left)
+    {
+    }
+
+    else if (movement == Movement::Right)
+    {
+    }
+}
