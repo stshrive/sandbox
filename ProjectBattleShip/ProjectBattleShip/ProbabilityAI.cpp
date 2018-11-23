@@ -7,10 +7,10 @@ ProbabilityAI::ProbabilityAI(State<BattleShipOpponent> * start)
     this->SetCurrentState(start);
 }
 
-Coordinates ProbabilityAI::Execute(BattleShipOpponent * owner)
+std::pair<OpponentAction, Coordinates> ProbabilityAI::Execute(BattleShipOpponent * owner)
 {
     this->GetCurrentState()->Execute(owner);
-    return owner->GetAttackSequence().back();
+    return owner->GetActionSequence().back();
 }
 
 void ProbabilityAI::Update(AttackResult result, BattleShipOpponent * owner)
