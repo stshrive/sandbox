@@ -17,6 +17,8 @@
 #include"Ships.h"
 #include"BattleshipOpponent.h"
 
+#include<map>
+
 #define WINDOWCLASS "Battling Ships"
 #define WINDOWTITLE "BATTLEFIELD"
 
@@ -45,9 +47,15 @@ Destroyer  PlayerCruiser;
 Submarine  PlayerSub;
 Patroller  PlayerPatrol;
 
-Ship * ships[5] = { &PlayerCarrier, &PlayerBattleShip, &PlayerCruiser, &PlayerSub, &PlayerPatrol };
+std::map<int, std::pair<Ship*, bool>> ships = {
+    {0, std::make_pair(&PlayerCarrier, false)},
+    {1, std::make_pair(&PlayerBattleShip, false)},
+    {2, std::make_pair(&PlayerCruiser, false)},
+    {3, std::make_pair(&PlayerSub, false)},
+    {4, std::make_pair(&PlayerPatrol, false)}
+};
 
-BattleShipOpponent* BtlShpOp = new BattleShipOpponent(new Probability(), 1);
+BattleShipOpponent* Opponent = new BattleShipOpponent(new Probability(), 1);
 
 //End ships---------------------------------------------------------------------------------------
 int ShipId;
@@ -65,7 +73,7 @@ enum Movement
 //Game Functions------------------------------------------------------------
 void NewGame();
 void EnemyTurn();
-bool Setup(Ship * ships[]);
+bool Setup(std::map<int, std::pair<Ship*, bool>> &ships);
 void MoveShip(Ship * ship, int map[][11], Movement movement);
 void DrawTile(BitMapObj &BmoDestination, BitMapObj &BmoSource, int x, int y, int TILE);
 void RenderMap();
@@ -337,15 +345,15 @@ void NewGame()
 	RenderMap();
 }
 
-bool Setup(Ship * ships[])
+bool Setup(std::map<int, std::pair<Ship*, bool>> &ships)
 {
     if (ShipId == -1)
     {
         ShipId = 0;
-        ships[ShipId]->Initialize(PlayerPosGrid);
+        ships[ShipId].first->Initialize(PlayerPosGrid);
     }
 
-    if (ships[ShipId]->GetPositionedStatus())
+    if (ships[ShipId].first->GetPositionedStatus())
     {
         ShipId++;
         if (ShipId >= SHIPCOUNT)
@@ -362,7 +370,7 @@ bool Setup(Ship * ships[])
             }
             return true;
         }
-        ships[ShipId]->Initialize(PlayerPosGrid); 
+        ships[ShipId].first->Initialize(PlayerPosGrid);
     }
 
     RenderMap();
@@ -426,12 +434,11 @@ AttackResult LaunchMissile(int Map[][11], XY position)
 
 void EnemyTurn()
 {
-	BtlShpOp->Update();
-    XY choice = BtlShpOp->GetChoice();
-    LaunchMissile(PlayerPosGrid, choice);
-    //BtlShipOp->ReadResult(LaunchMissile(PlayerPosGrid, choice));
+    Coordinates  choice = Opponent->GetChoice();
+    AttackResult result = LaunchMissile(PlayerPosGrid, choice);
 
-	RenderMap();
+    Opponent->ReadResult(result);
+    RenderMap();
 
     PLAYERTURN = true;
 }
