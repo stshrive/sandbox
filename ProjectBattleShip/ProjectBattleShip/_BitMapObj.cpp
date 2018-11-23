@@ -26,7 +26,6 @@ void BitMapObj::Load(HDC hdcCompatible, LPCTSTR filename)
 	GetObject(current_new,sizeof(BITMAP),(LPVOID)&bmp);
 	bmHeight = bmp.bmHeight;
 	bmWidth = bmp.bmWidth;
-
 }
 
 void BitMapObj::Create(HDC hdcCompatible, int height, int width)
@@ -39,7 +38,6 @@ void BitMapObj::Create(HDC hdcCompatible, int height, int width)
 
 	bmHeight = height;
 	bmWidth = width;
-
 }
 
 void BitMapObj::Destroy()
