@@ -28,7 +28,7 @@ protected:
 
     void ChangeState(State<owner_ty_>* pNewState, owner_ty_ * owner)
     {
-        assert(pNewState && "<AIStateMachine::ChangeState>: trying to chanege to a NULL state");
+        assert(pNewState && "<AIStateMachine::ChangeState>: trying to change to a NULL state");
 
         m_pPreviousState = m_pCurrentState;
         m_pCurrentState->Exit(owner);
