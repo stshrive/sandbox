@@ -7,6 +7,7 @@ const int WATER           = 0,
           HIGHLIGHT_WATER = 3,
           HIGHLIGHT_MISS  = 4,
           HIGHLIGHT_HIT   = 5,
+          INVISIBLE_SHIP  = 6,
           STEEL           = 9;
 
 const int A = 10,
