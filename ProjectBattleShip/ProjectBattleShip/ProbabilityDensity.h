@@ -30,7 +30,13 @@ private:
 public:
     Probability();
    ~Probability();
-    Probability(const Probability&);
+    Probability(Probability const &);
+    Probability(Probability&&);
+
+    Probability& operator=(Probability const &);
+    Probability& operator=(Probability&&);
+    
+    bool operator==(Probability const & other);
 
     void Update();
 	void Update(XY position);
