@@ -3,14 +3,19 @@
 #include"MapComponents.h"
 #include"AIModule.h"
 
-#include <vector>
+#include "Ships.h"
+
+#include <map>
 
 BattleShipOpponent::BattleShipOpponent(
-    AIModule<BattleShipOpponent, Coordinates, AttackResult>  * ai_module,
-    int id
-) : BaseEntity(id)
+    AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, AttackResult> * ai_module,
+    map<int, std::pair<Ship*, bool>> ships,
+    int id)
+    : BaseEntity(id)
 {
+    this->ships     = ships;
     this->ai_module = ai_module;
+    this->ship_id   = 0;
 }
 
 BattleShipOpponent::~BattleShipOpponent()
@@ -26,17 +31,23 @@ void BattleShipOpponent::ReadResult(AttackResult result)
     this->ai_module->Update(result, this);
 }
 
-XY BattleShipOpponent::GetChoice()
+std::pair<OpponentAction, Coordinates> BattleShipOpponent::GetChoice()
 {
     return this->ai_module->Execute(this);
 }
 
-vector<Coordinates> const & BattleShipOpponent::GetAttackSequence()
+map<int, std::pair<Ship*, bool>> const & BattleShipOpponent::GetShips()
 {
-    return this->attack_sequence;
+    return this->ships;
 }
 
-void BattleShipOpponent::AddAttackChoice(Coordinates const & coordinates)
+vector<std::pair<OpponentAction, Coordinates>> const & BattleShipOpponent::GetActionSequence()
 {
-    this->attack_sequence.push_back(coordinates);
+    return this->action_sequence;
+}
+
+void BattleShipOpponent::AddAction(
+    OpponentAction action, Coordinates const & coordinates)
+{
+    this->action_sequence.push_back(std::make_pair(action, coordinates));
 }

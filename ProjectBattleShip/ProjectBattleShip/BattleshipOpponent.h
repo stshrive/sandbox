@@ -5,34 +5,62 @@
 #include "BaseEntity.h"
 #include "State.h"
 #include <vector>
+#include <map>
 
 using std::vector;
+using std::map;
 
 template<typename owner_ty_, typename execution_ty_, typename update_ty_>
 class AIModule;
 
+class Ship;
+
 enum AttackResult
 {
-      Miss = 0
-    , Hit  = 1
-    , Sunk = 2
+      Miss  = 0
+    , Hit   = 1
+    , Sunk  = 2
+    , Begin = 3
+};
+
+enum OpponentAction
+{
+      Ready      = 0x000
+    , Fire       = 0x001
+    , PlaceShip  = 0x10D
+    , RotateShip = 0x120
+    , MoveLeft   = 0x125
+    , MoveUp     = 0x126
+    , MoveRight  = 0x127
+    , MoveDown   = 0x128
+    , MoveFlag   = 0x100
 };
 
 class BattleShipOpponent : public BaseEntity
 {
 private:
-	vector<Coordinates> attack_sequence;
-    AIModule<BattleShipOpponent, Coordinates, AttackResult> * ai_module;
+    int ship_id;
+    map<int, std::pair<Ship*, bool>> ships;
+	vector<std::pair<OpponentAction, Coordinates>> action_sequence;
+    AIModule<
+        BattleShipOpponent,
+        std::pair<OpponentAction,Coordinates>,
+        AttackResult> * ai_module;
 
 public:
-    BattleShipOpponent(AIModule<BattleShipOpponent, Coordinates, AttackResult>  * ai_module, int id);
+    BattleShipOpponent(
+        AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, AttackResult>*,
+        map<int, std::pair<Ship*, bool>>,
+        int);
+
     virtual ~BattleShipOpponent();
 
     void ReadResult(AttackResult result);
-    virtual Coordinates GetChoice();
+    virtual std::pair<OpponentAction, Coordinates> GetChoice();
 
-    vector<Coordinates> const & GetAttackSequence();
-    void AddAttackChoice(Coordinates const & coordinate);
+    map<int, std::pair<Ship*, bool>> const & GetShips();
+    vector<std::pair<OpponentAction, Coordinates>> const & GetActionSequence();
+    void AddAction(OpponentAction action, Coordinates const & coordinate);
 };
 
 #endif
