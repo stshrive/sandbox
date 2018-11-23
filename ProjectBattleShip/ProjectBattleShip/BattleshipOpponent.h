@@ -17,11 +17,6 @@ using std::vector;
 
 class AI;
 
-//Beginner
-//Easy
-//Normal
-//Hard
-
 enum AttackResult
 {
       Miss = 0
