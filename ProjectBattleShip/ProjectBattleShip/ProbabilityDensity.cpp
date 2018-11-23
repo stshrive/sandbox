@@ -69,7 +69,7 @@ int Probability::GetProbability(XY position)
 void Probability::ChangeProbability(int m[][10], const int Length, XY p)
 {
 	m[p.y][p.x] = 0;
-	for(int i = 1; i < Length; i++)
+	for(int i = 0; i < Length; i++)
 	{
 		if(p.y + i < 10)
         {
