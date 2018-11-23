@@ -51,10 +51,10 @@ std::map<int, std::pair<Ship*, bool>> ships = {
     {4, std::make_pair(&PlayerPatrol, false)}
 };
 
-BattleShipOpponent* Opponent = new BattleShipOpponent(EnemyAI, 1);
 
-//End ships---------------------------------------------------------------------------------------
-int ShipId;
+std::map<int, std::pair<Ship*, bool>>::size_type INVALID = 1000;
+std::map<int, std::pair<Ship*, bool>>::size_type ShipId;
+std::map<int, std::pair<Ship*, bool>>::size_type SHIPCOUNT = 5;
 
 enum Movement
 {
@@ -85,7 +85,7 @@ bool PLAYERTURN = true;
 bool ENEMYTURN = false;
 bool GameStarted = false;
 
-int SHIPCOUNT = 5;
+
 long MouseX;
 long MouseY;
 POINT cursorPos;
@@ -136,7 +136,19 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 					i %= BOARDSIZE;
 					j %= BOARDSIZE;
 				}
-				OpponentGrid[GridButtons[i][j].yCoordinate+1][GridButtons[i][j].xCoordinate+1] = HIT;
+
+                int x = GridButtons[i][j].xCoordinate + 1;
+                int y = GridButtons[i][j].yCoordinate + 1;
+                
+                if (OpponentGrid[y][x] != WATER && OpponentGrid[y][x] != MISS)
+                {
+                    OpponentGrid[y][x] = HIT;
+                }
+                else
+                {
+                    OpponentGrid[y][x] = MISS;
+                }
+
 				SendMessage(GridButtons[i][j].Button,BM_SETIMAGE,(WPARAM)IMAGE_BITMAP,TRANSPARENT);
 				EnableWindow(GridButtons[i][j].Button,FALSE);
 				ShowWindow(GridButtons[i][j].Button,SW_HIDE);
@@ -330,7 +342,7 @@ void mCreateButton_xy(mButton &button, int x, int y)
 
 void NewGame()
 {
-	ShipId = -1;
+	ShipId = INVALID;
 	for(int i = 0; i < GRIDSIZE; i++)
 	{
 		for(int j = 0; j < GRIDSIZE; j++)
@@ -359,7 +371,7 @@ void NewGame()
 
 bool Setup(std::map<int, std::pair<Ship*, bool>> &ships)
 {
-    if (ShipId == -1)
+    if (ShipId == INVALID)
     {
         ShipId = 0;
         ships[ShipId].first->Initialize(PlayerPosGrid);
@@ -432,11 +444,16 @@ inline POINT FindBitMapPos(int TILE)
 
 AttackResult LaunchMissile(int Map[][11], XY position)
 {
+    if (position.x == INVALID && position.y == INVALID)
+    {
+        return AttackResult::Begin;
+    }
+
     if (Map[position.y+1][position.x+1] != WATER)
     {
         PlayerPosGrid[position.y+1][position.x+1] += 80;
 
-        for (int i = 0; i < ships.size(); ++i)
+        for (std::map<int, std::pair<Ship*, bool>>::size_type i = 0; i < ships.size(); ++i)
         {
             if (ships[i].second)
             {
@@ -465,13 +482,24 @@ AttackResult LaunchMissile(int Map[][11], XY position)
 
 void EnemyTurn()
 {
-    Coordinates  choice = Opponent->GetChoice();
-    AttackResult result = LaunchMissile(PlayerPosGrid, choice);
+    std::pair<OpponentAction, Coordinates> action = Opponent->GetChoice();
+    
+    if (action.first == OpponentAction::Fire)
+    {
+        AttackResult result = LaunchMissile(PlayerPosGrid, action.second);
+        Opponent->ReadResult(result);
 
-    Opponent->ReadResult(result);
+        PLAYERTURN = true;
+    }
+    else if ((action.first & OpponentAction::MoveFlag) == OpponentAction::MoveFlag)
+    {
+    }
+    else
+    {
+        
+    }
+
     RenderMap();
-
-    PLAYERTURN = true;
 }
 
 void MoveShip(Ship * ship, int map[][11], Movement movement)
