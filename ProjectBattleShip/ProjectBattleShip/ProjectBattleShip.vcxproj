@@ -76,16 +76,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="BattleShipOpponent.cpp" />
-    <ClCompile Include="BattleShipStates.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="ProbabilityDensity.cpp" />
+    <ClCompile Include="SearchState.cpp" />
     <ClCompile Include="Ships.cpp" />
     <ClCompile Include="_BitMapObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ai.h" />
+    <ClInclude Include="AttackState.h" />
     <ClInclude Include="BaseEntity.h" />
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="BattleshipOpponent.h" />
@@ -93,6 +95,7 @@
     <ClInclude Include="coord.h" />
     <ClInclude Include="MapComponents.h" />
     <ClInclude Include="ProbabilityDensity.h" />
+    <ClInclude Include="SearchState.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="tiledefs.h" />
     <ClInclude Include="_BitMapObj.h" />
