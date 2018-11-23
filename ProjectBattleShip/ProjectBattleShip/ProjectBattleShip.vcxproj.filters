@@ -33,10 +33,13 @@
     <ClCompile Include="BattleShipOpponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BattleShipStates.cpp">
+    <ClCompile Include="BaseEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseEntity.cpp">
+    <ClCompile Include="AttackState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SearchState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,9 +62,6 @@
     <ClInclude Include="BattleshipOpponent.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
-    <ClInclude Include="BattleShipStates.h">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
@@ -75,6 +75,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ai.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchState.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="OpponentStates.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
   </ItemGroup>

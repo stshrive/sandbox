@@ -91,7 +91,7 @@
     <ClInclude Include="BaseEntity.h" />
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="BattleshipOpponent.h" />
-    <ClInclude Include="BattleShipStates.h" />
+    <ClInclude Include="OpponentStates.h" />
     <ClInclude Include="coord.h" />
     <ClInclude Include="MapComponents.h" />
     <ClInclude Include="ProbabilityDensity.h" />
