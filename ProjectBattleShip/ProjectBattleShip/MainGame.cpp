@@ -529,21 +529,13 @@ ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> act
 
 void EnemyTurn()
 {
-    std::pair<OpponentAction, Coordinates> action = Opponent->GetChoice();
-    
-    if (action.first == OpponentAction::Fire)
-    {
-        AttackResult result = LaunchMissile(PlayerPosGrid, action.second);
-        Opponent->ReadResult(result);
+    std::pair<OpponentAction, Coordinates> action = Opponent->GetAction();
+    ActionResult result = ReadOpponentAction(PlayerPosGrid, action);
+    Opponent->ReadResult(result);
 
+    if (result != ActionResult::Accept)
+    {
         PLAYERTURN = true;
-    }
-    else if ((action.first & OpponentAction::MoveFlag) == OpponentAction::MoveFlag)
-    {
-    }
-    else
-    {
-        
     }
 
     RenderMap();
