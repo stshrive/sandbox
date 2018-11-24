@@ -391,10 +391,44 @@ void RenderMap()
 	{
 		for(int x = 0; x < MAPWIDTH; x++)
 		{
-			if((y>2 && y<=13)&&(x>1&&x<=12))
-				MapGrid[y][x] = OpponentGrid[y-3][x-2];
-			else if((y>2 && y<=13)&&(x>15&&x<=26))
-				MapGrid[y][x] = PlayerPosGrid[y-3][x-16];
+            if ((y > 2 && y <= 13) && (x > 1 && x <= 12))
+            {
+                int value = OpponentGrid[y - 3][x - 2];
+                if ((value != WATER)
+                    && (value != HIT)
+                    && (value != MISS)
+                    && (value != ONE)
+                    && (value != TWO)
+                    && (value != THREE)
+                    && (value != FOUR)
+                    && (value != FIVE)
+                    && (value != SIX)
+                    && (value != SEVEN)
+                    && (value != EIGHT)
+                    && (value != NINE)
+                    && (value != TEN)
+                    && (value != A)
+                    && (value != B)
+                    && (value != C)
+                    && (value != D)
+                    && (value != E)
+                    && (value != F)
+                    && (value != G)
+                    && (value != H)
+                    && (value != I)
+                    && (value != J))
+                {
+                    MapGrid[y][x] = INVISIBLE_SHIP;
+                }
+                else
+                {
+                    MapGrid[y][x] = OpponentGrid[y - 3][x - 2];
+                }
+            }
+            else if ((y > 2 && y <= 13) && (x > 15 && x <= 26))
+            {
+                MapGrid[y][x] = PlayerPosGrid[y - 3][x - 16];
+            }
 			else
 				MapGrid[y][x] = STEEL;
 		}
