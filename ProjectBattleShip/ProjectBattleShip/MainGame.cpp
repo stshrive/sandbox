@@ -459,41 +459,71 @@ inline POINT FindBitMapPos(int TILE)
 	return pos;
 }
 
-AttackResult LaunchMissile(int Map[][11], XY position)
+ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> action)
 {
-    if (position.x == INVALID && position.y == INVALID)
+    if (action.first == OpponentAction::Fire)
     {
-        return AttackResult::Begin;
-    }
-
-    if (Map[position.y+1][position.x+1] != WATER)
-    {
-        PlayerPosGrid[position.y+1][position.x+1] += 80;
-
-        for (std::map<int, std::pair<Ship*, bool>>::size_type i = 0; i < ships.size(); ++i)
+        Coordinates position = action.second;
+        if (Map[position.y + 1][position.x + 1] != WATER)
         {
-            if (ships[i].second)
-            {
-                continue;
-            }
-            else
-            {
-                bool sunk = ships[i].first->GetSunkStatus(PlayerPosGrid);
+            PlayerPosGrid[position.y + 1][position.x + 1] += 80;
 
-                if (sunk)
+            for (std::map<int, std::pair<Ship*, bool>>::size_type i = 0; i < ships.size(); ++i)
+            {
+                if (ships[i].second)
                 {
-                    ships[i].second = sunk;
-                    return AttackResult::Sunk;
+                    continue;
+                }
+                else
+                {
+                    bool sunk = ships[i].first->GetSunkStatus(PlayerPosGrid);
+
+                    if (sunk)
+                    {
+                        ships[i].second = sunk;
+                        return ActionResult::Sunk;
+                    }
                 }
             }
-        }
 
-        return AttackResult::Hit;
+            return ActionResult::Hit;
+        }
+        else
+        {
+            PlayerPosGrid[position.y + 1][position.x + 1] = MISS;
+            return ActionResult::Miss;
+        }
     }
     else
     {
-        PlayerPosGrid[position.y+1][position.x+1] = MISS;
-        return AttackResult::Miss;
+        OpponentAction action_type = action.first;
+
+        if (action_type == OpponentAction::Ready)
+        {
+            return ActionResult::Begin;
+        }
+        else
+        {
+            int ship_id = Opponent->GetShipId();
+            if (ship_id == -1)
+            {
+                return ActionResult::Begin;
+            }
+            else
+            {
+                Movement movement = (Movement)(action.first ^ OpponentAction::MoveFlag);
+                Ship* ship = Opponent->GetShips().at(ship_id).first;
+                ship->Initialize(OpponentGrid);
+                if (MoveShip(ship, OpponentGrid, movement))
+                {
+                    return ActionResult::Accept;
+                }
+                else
+                {
+                    return ActionResult::Accept;
+                }
+            }
+        }
     }
 }
 
