@@ -17,10 +17,11 @@ class Ship;
 
 enum AttackResult
 {
-      Miss  = 0
-    , Hit   = 1
-    , Sunk  = 2
-    , Begin = 3
+      Miss   = 0
+    , Hit    = 1
+    , Sunk   = 2
+    , Accept = 3
+    , Begin  = 4
 };
 
 enum OpponentAction
@@ -61,6 +62,8 @@ public:
     map<int, std::pair<Ship*, bool>> const & GetShips();
     vector<std::pair<OpponentAction, Coordinates>> const & GetActionSequence();
     void AddAction(OpponentAction action, Coordinates const & coordinate);
+    
+    int GetShipId();
 };
 
 #endif

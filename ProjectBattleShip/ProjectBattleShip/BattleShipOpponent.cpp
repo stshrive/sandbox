@@ -13,9 +13,10 @@ BattleShipOpponent::BattleShipOpponent(
     int id)
     : BaseEntity(id)
 {
-    this->ships     = ships;
-    this->ai_module = ai_module;
-    this->ship_id   = 0;
+    this->ships        = ships;
+    this->ai_module    = ai_module;
+    this->ship_id      = 0;
+    this->placed_ships = 0;
 }
 
 BattleShipOpponent::~BattleShipOpponent()
@@ -50,4 +51,14 @@ void BattleShipOpponent::AddAction(
     OpponentAction action, Coordinates const & coordinates)
 {
     this->action_sequence.push_back(std::make_pair(action, coordinates));
+}
+
+int BattleShipOpponent::GetShipId()
+{
+    if (this->placed_ships == this->ships.size())
+    {
+        return -1;
+    }
+
+    return placed_ships;
 }
