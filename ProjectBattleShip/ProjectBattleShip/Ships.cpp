@@ -36,7 +36,8 @@ Ship::Ship(int size, int graphic_base)
         this->SourceIds[3][i] = this->graphic_base + i;
     }
 
-    this->positioned = false;
+    this->positioned  = false;
+    this->initialized = false;
     this->NWSE = 0;
 }
 
@@ -55,6 +56,12 @@ Ship::~Ship()
 
 void Ship::Initialize(int PlacementGrid[][11])
 {
+    if (this->initialized)
+    {
+        return;
+    }
+
+    this->initialized = true;
     int i, j;
     for (j = 1; j < 11; ++j)
     {

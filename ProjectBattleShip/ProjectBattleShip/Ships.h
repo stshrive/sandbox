@@ -40,6 +40,7 @@ protected:
     BitMapObj Source;
     bool positioned;
     bool vertical;
+    bool initialized;
     int NWSE;
     int * SourceIds[4];
 };
