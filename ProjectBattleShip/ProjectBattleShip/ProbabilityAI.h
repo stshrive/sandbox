@@ -10,7 +10,7 @@ class ProbabilityAI
     : public AIStateMachine
     < BattleShipOpponent,
       std::pair<OpponentAction, Coordinates>,
-      AttackResult>
+      ActionResult>
 {
 public:
     ProbabilityAI(State<BattleShipOpponent> * start);
@@ -18,7 +18,7 @@ public:
     virtual std::pair<OpponentAction, Coordinates> Execute(
         BattleShipOpponent *);
     
-    virtual void Update(AttackResult, BattleShipOpponent *);
+    virtual void Update(ActionResult, BattleShipOpponent *);
 };
 
 #endif

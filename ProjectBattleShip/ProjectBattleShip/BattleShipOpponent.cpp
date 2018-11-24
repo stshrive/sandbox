@@ -8,7 +8,7 @@
 #include <map>
 
 BattleShipOpponent::BattleShipOpponent(
-    AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, AttackResult> * ai_module,
+    AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, ActionResult> * ai_module,
     map<int, std::pair<Ship*, bool>> ships,
     int id)
     : BaseEntity(id)
@@ -27,12 +27,12 @@ BattleShipOpponent::~BattleShipOpponent()
     }
 }
 
-void BattleShipOpponent::ReadResult(AttackResult result)
+void BattleShipOpponent::ReadResult(ActionResult result)
 {
     this->ai_module->Update(result, this);
 }
 
-std::pair<OpponentAction, Coordinates> BattleShipOpponent::GetChoice()
+std::pair<OpponentAction, Coordinates> BattleShipOpponent::GetAction()
 {
     return this->ai_module->Execute(this);
 }

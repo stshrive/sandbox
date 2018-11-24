@@ -13,9 +13,9 @@ std::pair<OpponentAction, Coordinates> ProbabilityAI::Execute(BattleShipOpponent
     return owner->GetActionSequence().back();
 }
 
-void ProbabilityAI::Update(AttackResult result, BattleShipOpponent * owner)
+void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
 {
-    if (result == AttackResult::Hit)
+    if (result == ActionResult::Hit)
     {
         if (this->GetCurrentState()->StateId() == SearchStateId)
         {
@@ -23,12 +23,15 @@ void ProbabilityAI::Update(AttackResult result, BattleShipOpponent * owner)
         }
     }
 
-    if (result == AttackResult::Miss)
+    if (result == ActionResult::Begin)
     {
-
+        if (this->GetCurrentState()->StateId() == StartStateId)
+        {
+            this->ChangeState(&OpponentSearchState, owner);
+        }
     }
 
-    if (result == AttackResult::Sunk)
+    if (result == ActionResult::Sunk)
     {
         if (this->GetCurrentState()->StateId() == AttackStateId)
         {

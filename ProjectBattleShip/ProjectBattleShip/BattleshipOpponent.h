@@ -13,9 +13,13 @@ using std::map;
 template<typename owner_ty_, typename execution_ty_, typename update_ty_>
 class AIModule;
 
+class Start;
+class Search;
+class Attack;
+
 class Ship;
 
-enum AttackResult
+enum ActionResult
 {
       Miss   = 0
     , Hit    = 1
@@ -46,18 +50,23 @@ private:
     AIModule<
         BattleShipOpponent,
         std::pair<OpponentAction,Coordinates>,
-        AttackResult> * ai_module;
+        ActionResult> * ai_module;
+
+    friend class Start;
+
+protected:
+    int placed_ships;
 
 public:
     BattleShipOpponent(
-        AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, AttackResult>*,
+        AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, ActionResult>*,
         map<int, std::pair<Ship*, bool>>,
         int);
 
     virtual ~BattleShipOpponent();
 
-    void ReadResult(AttackResult result);
-    virtual std::pair<OpponentAction, Coordinates> GetChoice();
+    void ReadResult(ActionResult result);
+    virtual std::pair<OpponentAction, Coordinates> GetAction();
 
     map<int, std::pair<Ship*, bool>> const & GetShips();
     vector<std::pair<OpponentAction, Coordinates>> const & GetActionSequence();
