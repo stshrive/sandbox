@@ -487,36 +487,38 @@ void EnemyTurn()
     RenderMap();
 }
 
-void MoveShip(Ship * ship, int map[][11], Movement movement)
+bool MoveShip(Ship * ship, int map[][11], Movement movement)
 {
     if (movement == Movement::Rotate)
-        ship->Rotate(PlayerPosGrid);
-
+    {
+        ship->Rotate(map);
+    }
     else if (movement == Movement::Up)
     {
-        ship->Move(-1, 0, PlayerPosGrid);
+        ship->Move(-1, 0, map);
     }
-
     else if (movement == Movement::Down)
     {
-        ship->Move(1, 0, PlayerPosGrid);
+        ship->Move(1, 0, map);
     }
-
     else if (movement == Movement::Left)
     {
-        ship->Move(0, -1, PlayerPosGrid);
+        ship->Move(0, -1, map);
     }
-
     else if (movement == Movement::Right)
     {
-        ship->Move(0, +1, PlayerPosGrid);
+        ship->Move(0, +1, map);
     }
-
     else if (movement == Movement::Set)
     {
         if (!ship->GetPositionedStatus())
+        {
             ship->SetPositionedStatus();
+            return true;
+        }
     }
+
+    return false;
 }
 
 void MoveCursor(Coordinates cursor, int map[][11], Movement movement)
