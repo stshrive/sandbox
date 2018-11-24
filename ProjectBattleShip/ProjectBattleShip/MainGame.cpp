@@ -86,8 +86,6 @@ HWND      ExitBtn       = NULL;
 
 //BitMapObjects for holding the Graphics-------------------------------------
 BitMapObj Map;
-BitMapObj OpponentPosGrid;
-BitMapObj PlayerPosGridMap;
 BitMapObj Source;
 
 Coordinates Cursor;
