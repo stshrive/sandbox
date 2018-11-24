@@ -263,13 +263,13 @@ bool Ship::GetSunkStatus(int PlacementGrid[][11]) const
 
         if (this->GetDirection() == VERTICAL)
         {
-            start_p = min(this->GetPos().tl.y, this->GetPos().tl.y);
-            end_p   = max(this->GetPos().tl.y, this->GetPos().tl.y);
+            start_p = min(this->GetPos().tl.y, this->GetPos().br.y);
+            end_p   = max(this->GetPos().tl.y, this->GetPos().br.y);
         }
         else
         {
-            start_p = min(this->GetPos().tl.x, this->GetPos().tl.x);
-            end_p   = max(this->GetPos().tl.x, this->GetPos().tl.x);
+            start_p = min(this->GetPos().tl.x, this->GetPos().br.x);
+            end_p   = max(this->GetPos().tl.x, this->GetPos().br.x);
         }
 
         for (long point = start_p; point <= end_p; point++)
@@ -294,7 +294,7 @@ bool Ship::GetSunkStatus(int PlacementGrid[][11]) const
                 }
             }
 
-            if (!found) return false;
+            if (found) return false;
         }
         return true;
     }
