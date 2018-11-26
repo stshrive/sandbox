@@ -20,6 +20,7 @@ void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
         if (this->GetCurrentState()->StateId() == SearchStateId)
         {
             this->ChangeState(&OpponentAttackState, owner);
+            return;
         }
     }
 
@@ -28,6 +29,7 @@ void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
         if (this->GetCurrentState()->StateId() == StartStateId)
         {
             this->ChangeState(&OpponentSearchState, owner);
+            return;
         }
     }
 
@@ -36,6 +38,7 @@ void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
         if (this->GetCurrentState()->StateId() == AttackStateId)
         {
             this->ChangeState(&OpponentSearchState, owner);
+            return;
         }
     }
 }
