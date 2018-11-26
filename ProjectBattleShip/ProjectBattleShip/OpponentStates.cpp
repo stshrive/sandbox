@@ -7,4 +7,4 @@ HitProbability probability(BOARDSIZE);
 
 Start  OpponentStartState;
 Search OpponentSearchState(&probability);
-Attack OpponentAttackState;
+Attack OpponentAttackState(&probability);
