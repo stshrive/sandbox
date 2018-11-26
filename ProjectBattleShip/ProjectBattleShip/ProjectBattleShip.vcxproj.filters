@@ -124,8 +124,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tiles3.bmp">
+    <Image Include="tiles3.bmp">
       <Filter>Resource Files</Filter>
-    </None>
+    </Image>
   </ItemGroup>
 </Project>

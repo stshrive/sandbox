@@ -111,7 +111,10 @@
     <ClInclude Include="Ships.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="tiles3.bmp" />
+    <Image Include="tiles3.bmp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
