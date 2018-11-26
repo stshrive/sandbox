@@ -25,13 +25,7 @@ public:
         this->probability = probability;
     }
 
-    virtual ~Search()
-    {
-        if (this->probability)
-        {
-            delete this->probability;
-        }
-    }
+    virtual ~Search() {}
 
     virtual void Enter(BattleShipOpponent* entity);
     virtual void Execute(BattleShipOpponent* entity);
