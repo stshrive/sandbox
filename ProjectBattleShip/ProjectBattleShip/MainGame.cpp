@@ -476,7 +476,7 @@ ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> act
         Coordinates position = action.second;
         if (Map[position.y + 1][position.x + 1] != WATER)
         {
-            PlayerPosGrid[position.y + 1][position.x + 1] += 80;
+            Map[position.y + 1][position.x + 1] += 80;
 
             for (std::map<int, std::pair<Ship*, bool>>::size_type i = 0; i < ships.size(); ++i)
             {
@@ -486,7 +486,7 @@ ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> act
                 }
                 else
                 {
-                    bool sunk = ships[i].first->GetSunkStatus(PlayerPosGrid);
+                    bool sunk = ships[i].first->GetSunkStatus(Map);
 
                     if (sunk)
                     {
@@ -500,7 +500,7 @@ ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> act
         }
         else
         {
-            PlayerPosGrid[position.y + 1][position.x + 1] = MISS;
+            Map[position.y + 1][position.x + 1] = MISS;
             return ActionResult::Miss;
         }
     }
