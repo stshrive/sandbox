@@ -65,25 +65,13 @@ enum Movement
 };
 
 //Some Booleans For GamePlay
-bool SUNK = false;
 bool PLAYERTURN = false;
-bool ENEMYTURN = false;
 bool GameStarted = false;
 bool HideOpponent = true;
-
-
-long MouseX;
-long MouseY;
-POINT cursorPos;
 
 //The Main Window and Its Instance-------------------------------------------
 HINSTANCE hInstanceMain = NULL;
 HWND      hWndMain      = NULL;
-HWND      hWndOptions   = NULL;
-HWND      NewGameBtn    = NULL;
-HWND      SurrenderBtn  = NULL;
-HWND      ExitBtn       = NULL;
-
 
 //BitMapObjects for holding the Graphics-------------------------------------
 BitMapObj Map;
