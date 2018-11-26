@@ -7,9 +7,6 @@
 #include <vector>
 #include <map>
 
-using std::vector;
-using std::map;
-
 template<typename owner_ty_, typename execution_ty_, typename update_ty_>
 class AIModule;
 
@@ -45,8 +42,8 @@ class BattleShipOpponent : public BaseEntity
 {
 private:
     int ship_id;
-    map<int, std::pair<Ship*, bool>> ships;
-	vector<std::pair<OpponentAction, Coordinates>> action_sequence;
+    std::map<int, std::pair<Ship*, bool>> ships;
+	std::vector<std::pair<OpponentAction, Coordinates>> action_sequence;
     AIModule<
         BattleShipOpponent,
         std::pair<OpponentAction,Coordinates>,
@@ -62,7 +59,7 @@ protected:
 public:
     BattleShipOpponent(
         AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, ActionResult>*,
-        map<int, std::pair<Ship*, bool>>,
+        std::map<int, std::pair<Ship*, bool>>,
         int);
 
     virtual ~BattleShipOpponent();
@@ -70,8 +67,8 @@ public:
     void ReadResult(ActionResult result);
     virtual std::pair<OpponentAction, Coordinates> GetAction();
 
-    map<int, std::pair<Ship*, bool>> const & GetShips();
-    vector<std::pair<OpponentAction, Coordinates>> const & GetActionSequence();
+    std::map<int, std::pair<Ship*, bool>> const & GetShips();
+    std::vector<std::pair<OpponentAction, Coordinates>> const & GetActionSequence();
     void AddAction(OpponentAction action, Coordinates const & coordinate);
     
     int GetShipId();

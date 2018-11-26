@@ -13,7 +13,7 @@ Destroyer  OpponentCruiser;
 Submarine  OpponentSub;
 Patroller  OpponentPatrol;
 
-map<int, std::pair<Ship*, bool>> OpponentShips = {
+std::map<int, std::pair<Ship*, bool>> OpponentShips = {
     {0, std::make_pair(&OpponentCarrier,    false)},
     {1, std::make_pair(&OpponentBattleShip, false)},
     {2, std::make_pair(&OpponentCruiser,    false)},

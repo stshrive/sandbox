@@ -9,7 +9,7 @@
 
 BattleShipOpponent::BattleShipOpponent(
     AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, ActionResult> * ai_module,
-    map<int, std::pair<Ship*, bool>> ships,
+    std::map<int, std::pair<Ship*, bool>> ships,
     int id)
     : BaseEntity(id)
 {
@@ -38,12 +38,12 @@ std::pair<OpponentAction, Coordinates> BattleShipOpponent::GetAction()
     return this->ai_module->Execute(this);
 }
 
-map<int, std::pair<Ship*, bool>> const & BattleShipOpponent::GetShips()
+std::map<int, std::pair<Ship*, bool>> const & BattleShipOpponent::GetShips()
 {
     return this->ships;
 }
 
-vector<std::pair<OpponentAction, Coordinates>> const & BattleShipOpponent::GetActionSequence()
+std::vector<std::pair<OpponentAction, Coordinates>> const & BattleShipOpponent::GetActionSequence()
 {
     return this->action_sequence;
 }
