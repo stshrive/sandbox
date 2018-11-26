@@ -258,6 +258,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpArgs, i
 	
 	for(;;)
 	{
+        if (!PLAYERTURN)
+        {
+            EnemyTurn();
+            continue;
+        }
+
 		if(PeekMessage(&MainMsg,NULL,0,0,PM_REMOVE))
 		{
 			if(MainMsg.message == WM_QUIT)
@@ -275,8 +281,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpArgs, i
 
             continue;
 		}
-		if(!PLAYERTURN)
-		    EnemyTurn();
+        else
+        {
+            status = CheckVictoryStatus(ships, Opponent->GetShips());
+            if (status == GameStatus::AIWINS)
+            {
+                HideOpponent = false;
+                MessageBox(NULL, "You Lose!", "GAME OVER!", MB_OK);
+            }
+            if (status == GameStatus::PLAYERWINS)
+            {
+                HideOpponent = false;
+                MessageBox(NULL, "You Win!", "GAME OVER!", MB_OK);
+            }
+        }
 	}
 	return MainMsg.wParam;
 }
@@ -594,4 +612,41 @@ void MoveCursor(Coordinates cursor, int map[][11], Movement movement)
     else if (movement == Movement::Right)
     {
     }
+}
+
+GameStatus CheckVictoryStatus(
+    std::map<int, std::pair<Ship*, bool>> const &player_ships,
+    std::map<int, std::pair<Ship*, bool>> const &opponent_ships)
+{
+    bool player_alive = false;
+    bool opponent_alive = false;
+
+    for (size_t i = (size_t)0; i < player_ships.size(); ++i)
+    {
+        if (!player_ships.at(i).second)
+        {
+            player_alive = true;
+            break;
+        }
+    }
+
+    for (size_t i = (size_t)0; i < opponent_ships.size(); ++i)
+    {
+        if (!opponent_ships.at(i).second)
+        {
+            opponent_alive = true;
+            break;
+        }
+    }
+
+    if (opponent_alive && player_alive)
+        return GameStatus::RUNNING;
+
+    if (opponent_alive)
+        return GameStatus::AIWINS;
+
+    if (player_alive)
+        return GameStatus::PLAYERWINS;
+
+    return GameStatus::RUNNING;
 }
