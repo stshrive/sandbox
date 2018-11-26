@@ -1,10 +1,9 @@
 #ifndef OPPONENT_ATTACK_STATE_H_
 #define OPPONENT_ATTACK_STATE_H_
 
-#include"HitProbability.h"
-#include"State.h"
-#include<vector>
-#include<set>
+#include "HitProbability.h"
+#include "State.h"
+#include <vector>
 
 class BattleShipOpponent;
 

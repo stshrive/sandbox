@@ -1,9 +1,8 @@
 #ifndef OPPONENT_SEARCH_STATE_H_
 #define OPPONENT_SEARCH_STATE_H_
 
-#include"HitProbability.h"
-#include"State.h"
-
+#include "HitProbability.h"
+#include "State.h"
 #include <vector>
 
 class BattleShipOpponent;
