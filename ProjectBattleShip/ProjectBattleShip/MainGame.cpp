@@ -241,6 +241,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpArgs, i
 	
 	if(!hWndMain) return 0;
 	if(!GameInitialize()) return 0;
+    
+    GameStatus status = GameStatus::RUNNING;
 
 	MSG MainMsg;
 	
