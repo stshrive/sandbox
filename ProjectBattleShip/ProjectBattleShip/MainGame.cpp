@@ -66,7 +66,7 @@ enum Movement
 
 //Some Booleans For GamePlay
 bool SUNK = false;
-bool PLAYERTURN = true;
+bool PLAYERTURN = false;
 bool ENEMYTURN = false;
 bool GameStarted = false;
 bool HideOpponent = true;
