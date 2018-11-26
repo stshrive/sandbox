@@ -74,8 +74,8 @@ HINSTANCE hInstanceMain = NULL;
 HWND      hWndMain      = NULL;
 
 //BitMapObjects for holding the Graphics-------------------------------------
-BitMapObj Map;
-BitMapObj Source;
+BitMapObj GameWindow;
+BitMapObj GraphicSource;
 
 Coordinates Cursor;
 
@@ -175,7 +175,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 					j %= BOARDSIZE;
 				}
 				BtnHdc = BeginPaint(GridButtons[i][j].Button,&BtnPaint);
-				BitBlt(BtnHdc,0,0,TILESIZE,TILESIZE,Source,0,0,SRCAND);
+				BitBlt(BtnHdc,0,0,TILESIZE,TILESIZE,GraphicSource,0,0,SRCAND);
 
 				EndPaint(GridButtons[i][j].Button,&BtnPaint);
 				return 0;
@@ -186,7 +186,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 				PAINTSTRUCT paint;
 				HDC hdc;
 				hdc = BeginPaint(hwnd,&paint);
-				BitBlt(hdc,0,0,MAPWIDTH*TILESIZE,MAPHEIGHT*TILESIZE,Map,0,0,SRCCOPY);
+				BitBlt(hdc,0,0,MAPWIDTH*TILESIZE,MAPHEIGHT*TILESIZE,GameWindow,0,0,SRCCOPY);
 
 				EndPaint(hwnd,&paint);
 				return 0;
@@ -299,11 +299,11 @@ bool GameInitialize()
 		SWP_NOMOVE);
 
 	HDC hdc = GetDC(hWndMain);
-	Map.Create(hdc,MAPWIDTH * TILESIZE, MAPWIDTH * TILESIZE);
-	FillRect(Map,&tempRect,(HBRUSH)GetStockObject(NULL_BRUSH));
+	GameWindow.Create(hdc,MAPWIDTH * TILESIZE, MAPWIDTH * TILESIZE);
+	FillRect(GameWindow,&tempRect,(HBRUSH)GetStockObject(NULL_BRUSH));
 	ReleaseDC(hWndMain,hdc);
 
-	Source.Load(NULL,(LPCTSTR)"tiles3.bmp");
+	GraphicSource.Load(NULL,(LPCTSTR)"tiles3.bmp");
 
 	NewGame();
 
@@ -445,7 +445,7 @@ void RenderMap(bool hide)
 	for(int x = 0; x < MAPWIDTH; x++)
 	{
 		for(int y = 0; y < MAPHEIGHT; y++)
-			DrawTile(Map,Source,x,y,MapGrid[y][x]);
+			DrawTile(GameWindow,GraphicSource,x,y,MapGrid[y][x]);
 	}
 
 	InvalidateRect(hWndMain,NULL,FALSE);
