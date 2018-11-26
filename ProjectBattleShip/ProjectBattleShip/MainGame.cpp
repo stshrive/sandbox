@@ -69,6 +69,7 @@ bool SUNK = false;
 bool PLAYERTURN = true;
 bool ENEMYTURN = false;
 bool GameStarted = false;
+bool HideOpponent = true;
 
 
 long MouseX;
@@ -101,7 +102,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 
 		case WM_LBUTTONUP:
 			{	
-				RenderMap();
+				RenderMap(HideOpponent);
 			}break;
 
 		//Check Which button has been clicked on and change graphic accordingly
@@ -138,7 +139,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
 
                 PLAYERTURN = false;
 
-				RenderMap();
+				RenderMap(HideOpponent);
 				return 0;
 			}break;
 
@@ -156,7 +157,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
                         MoveShip(ships[ShipId].first, PlayerPosGrid, (Movement)wParam);
                     }
 
-					RenderMap();
+					RenderMap(HideOpponent);
 					return 0;
 				}
                 else
@@ -349,7 +350,7 @@ void NewGame()
 		}
 	}
 
-	RenderMap();
+	RenderMap(HideOpponent);
 }
 
 bool Setup(std::map<int, std::pair<Ship*, bool>> &ships)
@@ -380,12 +381,12 @@ bool Setup(std::map<int, std::pair<Ship*, bool>> &ships)
         ships[ShipId].first->Initialize(PlayerPosGrid);
     }
 
-    RenderMap();
+    RenderMap(HideOpponent);
 
     return false;
 }
 
-void RenderMap()
+void RenderMap(bool hide)
 {
 	for(int y = 0; y < MAPHEIGHT; y++)
 	{
@@ -394,7 +395,8 @@ void RenderMap()
             if ((y > 2 && y <= 13) && (x > 1 && x <= 12))
             {
                 int value = OpponentGrid[y - 3][x - 2];
-                if ((value != WATER)
+                if ((hide
+                    &&  value != WATER)
                     && (value != HIT)
                     && (value != MISS)
                     && (value != ONE)
@@ -538,7 +540,7 @@ void EnemyTurn()
         PLAYERTURN = true;
     }
 
-    RenderMap();
+    RenderMap(HideOpponent);
 }
 
 bool MoveShip(Ship * ship, int map[][11], Movement movement)
