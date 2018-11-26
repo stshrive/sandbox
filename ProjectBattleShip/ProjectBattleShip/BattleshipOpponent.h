@@ -52,6 +52,7 @@ private:
     std::vector<ActionResult> action_results;
 
     friend class Start;
+    friend class Attack;
 
 protected:
     int placed_ships;

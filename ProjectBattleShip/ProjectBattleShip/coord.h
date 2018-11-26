@@ -27,7 +27,7 @@ typedef struct Coordinates
         this->y++;
         return *this;
     }
-    bool operator==(Coordinates const other)
+    bool operator==(Coordinates const & other)
     {
         return this->x == other.x && this->y == other.y;
     }
