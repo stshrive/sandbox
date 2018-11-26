@@ -29,6 +29,7 @@ BattleShipOpponent::~BattleShipOpponent()
 
 void BattleShipOpponent::ReadResult(ActionResult result)
 {
+    this->action_results.push_back(result);
     this->ai_module->Update(result, this);
 }
 

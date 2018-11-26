@@ -52,6 +52,8 @@ private:
         std::pair<OpponentAction,Coordinates>,
         ActionResult> * ai_module;
 
+    std::vector<ActionResult> action_results;
+
     friend class Start;
 
 protected:
