@@ -13,7 +13,7 @@ constexpr char AttackStateId[] = "AttackState";
 class Attack : public State<BattleShipOpponent>
 {
 private:
-    IProbability<int, Coordinates> * probability;
+    std::shared_ptr<IProbability<int, Coordinates>> probability;
 
     std::vector<Coordinates> find_neighbors(
         Coordinates const & position,
@@ -21,8 +21,8 @@ private:
         std::vector<Coordinates> const & traversed);
 
 public:
-    Attack(IProbability<int, Coordinates> * probability)
-        :State(AttackStateId)
+    Attack(std::shared_ptr<IProbability<int, Coordinates>> probability)
+        : State(AttackStateId)
     {
         this->probability = probability;
     }

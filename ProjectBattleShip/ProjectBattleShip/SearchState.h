@@ -13,13 +13,13 @@ constexpr char SearchStateId[] = "SearchState";
 class Search : public State<BattleShipOpponent>
 {
 private:
-    IProbability<int, Coordinates> * probability;
+    std::shared_ptr<IProbability<int, Coordinates>> probability;
 
     std::vector<Coordinates>::size_type Choose(
         std::vector<Coordinates> choices);
 
 public:
-    Search(IProbability<int, Coordinates> * probability)
+    Search(std::shared_ptr<IProbability<int, Coordinates>> probability)
         : State(SearchStateId)
     {
         this->probability = probability;

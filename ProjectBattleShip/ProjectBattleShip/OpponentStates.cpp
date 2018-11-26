@@ -3,8 +3,9 @@
 
 #include "MapComponents.h"
 
-HitProbability probability(BOARDSIZE);
+std::shared_ptr<IProbability<int, Coordinates>> probability(
+    new HitProbability(BOARDSIZE));
 
 Start  OpponentStartState;
-Search OpponentSearchState(&probability);
-Attack OpponentAttackState(&probability);
+Search OpponentSearchState(probability);
+Attack OpponentAttackState(probability);
