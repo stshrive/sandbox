@@ -3,11 +3,11 @@
 #include <vector>
 #include <random>
 
-void SearchState::Enter(BattleShipOpponent* entity)
+void SearchState::Enter(std::shared_ptr<BattleShipOpponent> entity)
 {
 }
 
-void SearchState::Execute(BattleShipOpponent* entity)
+void SearchState::Execute(std::shared_ptr<BattleShipOpponent> entity)
 {
     std::vector<Coordinates> choices;
 
@@ -57,7 +57,7 @@ void SearchState::Execute(BattleShipOpponent* entity)
     entity->AddAction(OpponentAction::Fire, choice);
 }
 
-void SearchState::Exit(BattleShipOpponent* entity)
+void SearchState::Exit(std::shared_ptr<BattleShipOpponent> entity)
 {
 }
 

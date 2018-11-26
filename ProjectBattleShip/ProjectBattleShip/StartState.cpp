@@ -30,12 +30,12 @@ std::uniform_int_distribution<int> distribution(1, actions.size());
 OpponentAction ChooseAction();
 
 
-void StartState::Enter(BattleShipOpponent* entity)
+void StartState::Enter(std::shared_ptr<BattleShipOpponent> entity)
 {
 
 }
 
-void StartState::Execute(BattleShipOpponent* entity)
+void StartState::Execute(std::shared_ptr<BattleShipOpponent> entity)
 {
     OpponentAction action = ChooseAction();
     if (action == OpponentAction::PlaceShip)
@@ -45,7 +45,7 @@ void StartState::Execute(BattleShipOpponent* entity)
     entity->AddAction(action, Coordinates());
 }
 
-void StartState::Exit(BattleShipOpponent* entity)
+void StartState::Exit(std::shared_ptr<BattleShipOpponent> entity)
 {
 }
 

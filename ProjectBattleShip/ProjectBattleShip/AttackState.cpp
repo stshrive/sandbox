@@ -3,12 +3,12 @@
 #include <queue>
 #include <vector>
 
-void AttackState::Enter(BattleShipOpponent* entity)
+void AttackState::Enter(std::shared_ptr<BattleShipOpponent> entity)
 {
 
 }
 
-void AttackState::Execute(BattleShipOpponent* entity)
+void AttackState::Execute(std::shared_ptr<BattleShipOpponent> entity)
 {
     std::queue<Coordinates> candidates;
 
@@ -67,7 +67,7 @@ void AttackState::Execute(BattleShipOpponent* entity)
     entity->AddAction(OpponentAction::Fire, choice);
 }
 
-void AttackState::Exit(BattleShipOpponent* entity)
+void AttackState::Exit(std::shared_ptr<BattleShipOpponent> entity)
 {
 }
 

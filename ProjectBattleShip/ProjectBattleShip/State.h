@@ -15,9 +15,9 @@ public:
 
     virtual ~State() {}
 
-	virtual void Enter(owner_ty_*)=0;
-	virtual void Execute(owner_ty_*)=0;
-	virtual void Exit(owner_ty_*)=0;
+	virtual void Enter  (std::shared_ptr<owner_ty_>)=0;
+	virtual void Execute(std::shared_ptr<owner_ty_>)=0;
+	virtual void Exit   (std::shared_ptr<owner_ty_>)=0;
 
     virtual std::string StateId() const final
     {

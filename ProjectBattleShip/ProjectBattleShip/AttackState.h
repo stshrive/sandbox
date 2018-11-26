@@ -32,9 +32,9 @@ public:
     AttackState(const AttackState&);
     AttackState& operator=(const AttackState&);
 
-    virtual void Enter(BattleShipOpponent* entity);
-    virtual void Execute(BattleShipOpponent* entity);
-    virtual void Exit(BattleShipOpponent* entity);
+    virtual void Enter  (std::shared_ptr<BattleShipOpponent> entity);
+    virtual void Execute(std::shared_ptr<BattleShipOpponent> entity);
+    virtual void Exit   (std::shared_ptr<BattleShipOpponent> entity);
 };
 
 #endif
