@@ -53,7 +53,7 @@ void Attack::Execute(BattleShipOpponent* entity)
         }
         else
         {
-            for (Coordinates neighbor : this->find_neighbors(current, hits, traversed))
+            for (Coordinates neighbor : this->find_neighbors(current, hits, traversed, choices))
             {
                 candidates.push(neighbor);
             }
@@ -73,7 +73,10 @@ void Attack::Exit(BattleShipOpponent* entity)
 
 
 std::vector<Coordinates> Attack::find_neighbors(
-    Coordinates const & position, std::vector<Coordinates> const & hits, std::vector<Coordinates> const & traversed)
+    Coordinates const & position,
+    std::vector<Coordinates> const & hits,
+    std::vector<Coordinates> const & traversed,
+    std::vector<Coordinates> const & choices)
 {
     std::vector<Coordinates> neighbors;
     for (unsigned x = position.x - 1; x <= position.x + 1; ++x)
@@ -90,7 +93,7 @@ std::vector<Coordinates> Attack::find_neighbors(
                 {
                     neighbors.push_back(neighbor);
                 }
-                else 
+                else if (choices.empty())
                 {
                     bool seen = false;
                     for (size_t i = 0; i < traversed.size(); ++i)

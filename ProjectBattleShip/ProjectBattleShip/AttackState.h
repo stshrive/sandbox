@@ -18,7 +18,8 @@ private:
     std::vector<Coordinates> find_neighbors(
         Coordinates const & position,
         std::vector<Coordinates> const & hits,
-        std::vector<Coordinates> const & traversed);
+        std::vector<Coordinates> const & traversed,
+        std::vector<Coordinates> const & choices);
 
 public:
     Attack(std::shared_ptr<IProbability<int, Coordinates>> probability)
