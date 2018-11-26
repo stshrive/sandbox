@@ -3,12 +3,12 @@
 #include <queue>
 #include <vector>
 
-void Attack::Enter(BattleShipOpponent* entity)
+void AttackState::Enter(BattleShipOpponent* entity)
 {
 
 }
 
-void Attack::Execute(BattleShipOpponent* entity)
+void AttackState::Execute(BattleShipOpponent* entity)
 {
     std::queue<Coordinates> candidates;
 
@@ -67,12 +67,12 @@ void Attack::Execute(BattleShipOpponent* entity)
     entity->AddAction(OpponentAction::Fire, choice);
 }
 
-void Attack::Exit(BattleShipOpponent* entity)
+void AttackState::Exit(BattleShipOpponent* entity)
 {
 }
 
 
-std::vector<Coordinates> Attack::find_neighbors(
+std::vector<Coordinates> AttackState::find_neighbors(
     Coordinates const & position,
     std::vector<Coordinates> const & hits,
     std::vector<Coordinates> const & traversed,

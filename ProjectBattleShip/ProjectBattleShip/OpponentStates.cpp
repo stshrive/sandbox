@@ -6,6 +6,6 @@
 std::shared_ptr<IProbability<int, Coordinates>> probability(
     new HitProbability(BOARDSIZE));
 
-Start  OpponentStartState;
-Search OpponentSearchState(probability);
-Attack OpponentAttackState(probability);
+StartState  OpponentStartState;
+SearchState OpponentSearchState(probability);
+AttackState OpponentAttackState(probability);

@@ -10,9 +10,9 @@
 template<typename owner_ty_, typename execution_ty_, typename update_ty_>
 class AIModule;
 
-class Start;
-class Search;
-class Attack;
+class StartState;
+class SearchState;
+class AttackState;
 
 class Ship;
 
@@ -51,8 +51,8 @@ private:
 
     std::vector<ActionResult> action_results;
 
-    friend class Start;
-    friend class Attack;
+    friend class StartState;
+    friend class AttackState;
 
 protected:
     int placed_ships;

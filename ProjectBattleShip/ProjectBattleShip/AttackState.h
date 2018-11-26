@@ -9,7 +9,7 @@ class BattleShipOpponent;
 
 constexpr char AttackStateId[] = "AttackState";
 
-class Attack : public State<BattleShipOpponent>
+class AttackState : public State<BattleShipOpponent>
 {
 private:
     std::shared_ptr<IProbability<int, Coordinates>> probability;
@@ -21,16 +21,16 @@ private:
         std::vector<Coordinates> const & choices);
 
 public:
-    Attack(std::shared_ptr<IProbability<int, Coordinates>> probability)
+    AttackState(std::shared_ptr<IProbability<int, Coordinates>> probability)
         : State(AttackStateId)
     {
         this->probability = probability;
     }
 
-    virtual ~Attack() {}
+    virtual ~AttackState() {}
 
-    Attack(const Attack&);
-    Attack& operator=(const Attack&);
+    AttackState(const AttackState&);
+    AttackState& operator=(const AttackState&);
 
     virtual void Enter(BattleShipOpponent* entity);
     virtual void Execute(BattleShipOpponent* entity);

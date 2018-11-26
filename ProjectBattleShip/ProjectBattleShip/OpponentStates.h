@@ -5,8 +5,8 @@
 #include "SearchState.h"
 #include "StartState.h"
 
-extern Start  OpponentStartState;
-extern Search OpponentSearchState;
-extern Attack OpponentAttackState;
+extern StartState  OpponentStartState;
+extern SearchState OpponentSearchState;
+extern AttackState OpponentAttackState;
 
 #endif

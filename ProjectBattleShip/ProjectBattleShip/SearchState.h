@@ -9,7 +9,7 @@ class BattleShipOpponent;
 
 constexpr char SearchStateId[] = "SearchState";
 
-class Search : public State<BattleShipOpponent>
+class SearchState : public State<BattleShipOpponent>
 {
 private:
     std::shared_ptr<IProbability<int, Coordinates>> probability;
@@ -18,13 +18,13 @@ private:
         std::vector<Coordinates> choices);
 
 public:
-    Search(std::shared_ptr<IProbability<int, Coordinates>> probability)
+    SearchState(std::shared_ptr<IProbability<int, Coordinates>> probability)
         : State(SearchStateId)
     {
         this->probability = probability;
     }
 
-    virtual ~Search() {}
+    virtual ~SearchState() {}
 
     virtual void Enter(BattleShipOpponent* entity);
     virtual void Execute(BattleShipOpponent* entity);

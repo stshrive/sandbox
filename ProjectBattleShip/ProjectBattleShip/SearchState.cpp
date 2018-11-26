@@ -3,11 +3,11 @@
 #include <vector>
 #include <random>
 
-void Search::Enter(BattleShipOpponent* entity)
+void SearchState::Enter(BattleShipOpponent* entity)
 {
 }
 
-void Search::Execute(BattleShipOpponent* entity)
+void SearchState::Execute(BattleShipOpponent* entity)
 {
     std::vector<Coordinates> choices;
 
@@ -57,11 +57,11 @@ void Search::Execute(BattleShipOpponent* entity)
     entity->AddAction(OpponentAction::Fire, choice);
 }
 
-void Search::Exit(BattleShipOpponent* entity)
+void SearchState::Exit(BattleShipOpponent* entity)
 {
 }
 
-std::vector<Coordinates>::size_type Search::Choose(
+std::vector<Coordinates>::size_type SearchState::Choose(
     std::vector<Coordinates> choices)
 {
     std::vector<Coordinates>::size_type size = choices.size();

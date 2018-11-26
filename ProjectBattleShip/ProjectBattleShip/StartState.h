@@ -7,15 +7,15 @@ class BattleShipOpponent;
 
 constexpr char StartStateId[] = "StartState";
 
-class Start : public State<BattleShipOpponent>
+class StartState : public State<BattleShipOpponent>
 {
 public:
-    Start() 
+    StartState() 
         : State(StartStateId)
     {}
 
-    Start(const Start&);
-    Start& operator=(const Start&);
+    StartState(const StartState&);
+    StartState& operator=(const StartState&);
 
     virtual void Enter(BattleShipOpponent* entity);
     virtual void Execute(BattleShipOpponent* entity);
