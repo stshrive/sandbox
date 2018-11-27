@@ -1,0 +1,12 @@
+*.exe
+*.ilk
+*.pdb
+ipch/
+.sdf
+.suo
+.vs
+*.obj
+*.tlog
+Release/
+Debug/
+desktop.ini
