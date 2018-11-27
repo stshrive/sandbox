@@ -1,4 +1,7 @@
+#include <Windows.h>
+
 #include "BitMapObj.h"
+#include "tiledefs.h"
 
 BitMapObj::BitMapObj()
 {
