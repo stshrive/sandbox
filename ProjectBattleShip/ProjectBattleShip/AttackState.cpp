@@ -79,9 +79,12 @@ std::vector<Coordinates> AttackState::find_neighbors(
     std::vector<Coordinates> const & choices)
 {
     std::vector<Coordinates> neighbors;
-    for (unsigned x = position.x - 1; x <= position.x + 1; ++x)
+    unsigned x_start = (position.x - 1 > position.x) ? 0 : position.x - 1;
+    unsigned y_start = (position.y - 1 > position.y) ? 0 : position.y - 1;
+
+    for (unsigned x = x_start; x <= position.x + 1; ++x)
     {
-        for (unsigned y = position.y - 1; y <= position.y + 1; ++y)
+        for (unsigned y = y_start; y <= position.y + 1; ++y)
         {
             if ((x == position.x || y == position.y)
                 && !(x == position.x && y == position.y))
