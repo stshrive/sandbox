@@ -16,7 +16,7 @@ class HitProbability
     : public IProbability<int, Coordinates>
 {
 private:
-    std::mutex critical_section;
+    std::mutex update_lock;
 
 	int ship_2_[10][10];
 	int ship_3a[10][10];

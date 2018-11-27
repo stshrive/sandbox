@@ -42,25 +42,25 @@ HitProbability::~HitProbability() {}
 
 void HitProbability::Update()
 {
-    this->critical_section.lock();
-
 	for(unsigned i = 0; i < this->dimensions; i++){
-		for(unsigned j = 0; j < this->dimensions; j++)
-			Master[i][j] = (
-                  this->ship_2_[i][j]
+        for (unsigned j = 0; j < this->dimensions; j++)
+        {
+            this->update_lock.lock();
+
+            Master[i][j] = (
+                this->ship_2_[i][j]
                 + this->ship_3a[i][j]
                 + this->ship_3b[i][j]
                 + this->ship_4_[i][j]
                 + this->ship_5_[i][j]);
-	}
 
-    this->critical_section.unlock();
+            this->update_lock.unlock();
+        }
+	}
 }
 
 void HitProbability::Update(XY position)
 {
-    this->critical_section.lock();
-
     if (position.x >= 0 && position.y >= 0)
     {
         this->ChangeProbability(ship_2_, _TWO  , position);
@@ -70,7 +70,6 @@ void HitProbability::Update(XY position)
         this->ChangeProbability(ship_5_, _FIVE , position);
     }
 
-    this->critical_section.unlock();
     this->Update();
 }
 

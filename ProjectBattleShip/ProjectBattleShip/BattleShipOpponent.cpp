@@ -50,9 +50,7 @@ void BattleShipOpponent::ReadResult(ActionResult result)
 
 std::pair<OpponentAction, Coordinates> BattleShipOpponent::GetAction()
 {
-    this->critical_section.lock();
     auto value = this->ai_module->Execute(this->shared_from_this());
-    this->critical_section.unlock();
 
     return value;
 }
