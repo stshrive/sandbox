@@ -14,13 +14,15 @@
 #include"Ships.h"
 #include"Opponent.h"
 #include"Game.h"
+#include"tiledefs.h"
 
 #include<map>
+#include<memory>
 
 #define WINDOWCLASS "Battling Ships"
 #define WINDOWTITLE "BATTLEFIELD"
 
-CHAR  WarningMessage[] = "You are about to exit the game!\nAre you sure this is what you want to do?";
+CHAR  WarningMessage[] = "You are about to exit the game.\nAre you sure this is what you want to do?";
 
 //The Buttons----------------------------------------------------------------
 int Id = 100;//start id for the buttons
@@ -34,25 +36,18 @@ typedef struct ButtonSpecs
 
 mButton GridButtons[GRIDSIZE-1][GRIDSIZE-1];
 
-//Ship Declarations ------------------------------------------------------------------------------
-Carrier    PlayerCarrier;
-BattleShip PlayerBattleShip;
-Destroyer  PlayerCruiser;
-Submarine  PlayerSub;
-Patroller  PlayerPatrol;
-
-std::map<int, std::pair<Ship*, bool>> ships = {
-    {0, std::make_pair(&PlayerCarrier, false)},
-    {1, std::make_pair(&PlayerBattleShip, false)},
-    {2, std::make_pair(&PlayerCruiser, false)},
-    {3, std::make_pair(&PlayerSub, false)},
-    {4, std::make_pair(&PlayerPatrol, false)}
+std::map<int, std::pair<std::shared_ptr<Ship>, bool>> ships = {
+    {0, std::make_pair(std::make_shared<Carrier>()   , false)},
+    {1, std::make_pair(std::make_shared<BattleShip>(), false)},
+    {2, std::make_pair(std::make_shared<Destroyer>() , false)},
+    {3, std::make_pair(std::make_shared<Submarine>() , false)},
+    {4, std::make_pair(std::make_shared<Patroller>() , false)}
 };
 
 
-std::map<int, std::pair<Ship*, bool>>::size_type INVALID = 1000;
-std::map<int, std::pair<Ship*, bool>>::size_type ShipId;
-std::map<int, std::pair<Ship*, bool>>::size_type SHIPCOUNT = 5;
+std::map<int, std::pair<std::shared_ptr<Ship>, bool>>::size_type INVALID = 1000;
+std::map<int, std::pair<std::shared_ptr<Ship>, bool>>::size_type ShipId;
+std::map<int, std::pair<std::shared_ptr<Ship>, bool>>::size_type SHIPCOUNT = 5;
 
 enum Movement
 {
@@ -361,7 +356,7 @@ void NewGame()
 	RenderMap(HideOpponent);
 }
 
-bool Setup(std::map<int, std::pair<Ship*, bool>> &ships)
+bool Setup(std::map<int, std::pair<std::shared_ptr<Ship>, bool>> &ships)
 {
     if (ShipId == INVALID)
     {
@@ -478,7 +473,7 @@ ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> act
         {
             Map[position.y + 1][position.x + 1] += 80;
 
-            for (std::map<int, std::pair<Ship*, bool>>::size_type i = 0; i < ships.size(); ++i)
+            for (std::map<int, std::pair<std::shared_ptr<Ship>, bool>>::size_type i = 0; i < ships.size(); ++i)
             {
                 if (ships[i].second)
                 {
@@ -522,7 +517,7 @@ ActionResult ReadOpponentAction(int Map[][11], std::pair<OpponentAction, XY> act
             else
             {
                 Movement movement = (Movement)(action.first ^ OpponentAction::MoveFlag);
-                Ship* ship = Opponent->GetShips().at(ship_id).first;
+                std::shared_ptr<Ship> ship = Opponent->GetShips().at(ship_id).first;
                 ship->Initialize(OpponentGrid);
                 if (MoveShip(ship, OpponentGrid, movement))
                 {
@@ -551,7 +546,7 @@ void EnemyTurn()
     RenderMap(HideOpponent);
 }
 
-bool MoveShip(Ship * ship, int map[][11], Movement movement)
+bool MoveShip(std::shared_ptr<Ship> ship, int map[][11], Movement movement)
 {
     if (movement == Movement::Rotate)
     {
@@ -605,8 +600,8 @@ void MoveCursor(Coordinates cursor, int map[][11], Movement movement)
 }
 
 GameStatus CheckVictoryStatus(
-    std::map<int, std::pair<Ship*, bool>> const &player_ships,
-    std::map<int, std::pair<Ship*, bool>> const &opponent_ships)
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> const &player_ships,
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> const &opponent_ships)
 {
     bool player_alive = false;
     bool opponent_alive = false;

@@ -3,37 +3,40 @@
 
 #include"AIModule.h"
 #include<assert.h>
+#include<memory>
 
 template <typename Ty_>
 class State;
 
-template<class owner_ty_, typename execution_ty_, typename update_ty_>
+template<class actor_ty_, typename execution_ty_, typename update_ty_>
 class AIStateMachine
-    : public AIModule<owner_ty_, execution_ty_, update_ty_>
+    : public AIModule<actor_ty_, execution_ty_, update_ty_>
 {
 private:
-	State<owner_ty_> * m_pCurrentState;
-	State<owner_ty_> * m_pPreviousState;
+	std::shared_ptr< State<actor_ty_> > m_pCurrentState;
+	std::shared_ptr< State<actor_ty_> > m_pPreviousState;
 
 protected:
-	void SetCurrentState(State<owner_ty_>*  state)
+	void SetCurrentState(std::shared_ptr<State<actor_ty_>> state)
     {
         m_pCurrentState = state;
     }
 
-	void SetPreviousState(State<owner_ty_>* state)
+	void SetPreviousState(std::shared_ptr<State<actor_ty_>> state)
     {
         m_pPreviousState = state;
     }
 
-    void ChangeState(State<owner_ty_>* pNewState, owner_ty_ * owner)
+    void ChangeState(
+        std::shared_ptr<State<actor_ty_>> pNewState,
+        std::shared_ptr<actor_ty_>        actor)
     {
         assert(pNewState && "<AIStateMachine::ChangeState>: trying to change to a NULL state");
 
         m_pPreviousState = m_pCurrentState;
-        m_pCurrentState->Exit(owner);
+        m_pCurrentState->Exit(actor);
         m_pCurrentState = pNewState;
-        m_pCurrentState->Enter(owner);
+        m_pCurrentState->Enter(actor);
     }
 
     void RevertStates()
@@ -48,11 +51,11 @@ public:
     {
     }
 
-    virtual execution_ty_ Execute(owner_ty_ *)   abstract;
-    virtual void Update(update_ty_, owner_ty_ *) abstract;
+    virtual execution_ty_ Execute(  std::shared_ptr<actor_ty_> actor) abstract;
+    virtual void Update(update_ty_, std::shared_ptr<actor_ty_> actor) abstract;
 
 public:
-    State<owner_ty_> * GetCurrentState()
+    std::shared_ptr<State<actor_ty_>> GetCurrentState()
     {
         return this->m_pCurrentState;
     }

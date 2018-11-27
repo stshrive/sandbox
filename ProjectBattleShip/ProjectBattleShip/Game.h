@@ -2,15 +2,17 @@
 #define GAME_H_
 
 #include <map>
-#include "BitMapObj.h"
+#include <memory>
 
-class Ship;
+#include "BitMapObj.h"
+#include "Ships.h"
+
 enum Movement;
 typedef struct ButtonSpecs mButton;
 
 bool GameInitialize();
-bool Setup(std::map<int, std::pair<Ship*, bool>> &ships);
-bool MoveShip(Ship * ship, int map[][11], Movement movement);
+bool Setup(std::map<int, std::pair<std::shared_ptr<Ship>, bool>> &ships);
+bool MoveShip(std::shared_ptr<Ship> ship, int map[][11], Movement movement);
 
 void NewGame();
 void EnemyTurn();
@@ -29,7 +31,7 @@ enum GameStatus
 };
 
 GameStatus CheckVictoryStatus(
-    std::map<int, std::pair<Ship*, bool>> const &player_ships,
-    std::map<int, std::pair<Ship*, bool>> const &opponent_ships);
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> const &player_ships,
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> const &opponent_ships);
 
 #endif

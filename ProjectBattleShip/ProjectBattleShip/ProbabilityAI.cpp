@@ -1,25 +1,33 @@
 #include "ProbabilityAI.h"
 #include "OpponentStates.h"
 
-ProbabilityAI::ProbabilityAI(State<BattleShipOpponent> * start)
+ProbabilityAI::ProbabilityAI(
+    std::shared_ptr<State<BattleShipOpponent>> start,
+    std::shared_ptr<State<BattleShipOpponent>> search,
+    std::shared_ptr<State<BattleShipOpponent>> attack)
     : AIStateMachine()
 {
+    this->Start  = start;
+    this->Search = search;
+    this->Attack = attack;
+
     this->SetCurrentState(start);
 }
 
-std::pair<OpponentAction, Coordinates> ProbabilityAI::Execute(BattleShipOpponent * owner)
+std::pair<OpponentAction, Coordinates>
+ProbabilityAI::Execute(std::shared_ptr<BattleShipOpponent> actor)
 {
-    this->GetCurrentState()->Execute(owner);
-    return owner->GetActionSequence().back();
+    this->GetCurrentState()->Execute(actor);
+    return actor->GetActionSequence().back();
 }
 
-void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
+void ProbabilityAI::Update(ActionResult result, std::shared_ptr<BattleShipOpponent> actor)
 {
     if (result == ActionResult::Hit)
     {
         if (this->GetCurrentState()->StateId() == SearchStateId)
         {
-            this->ChangeState(&OpponentAttackState, owner);
+            this->ChangeState(this->Attack, actor);
             return;
         }
     }
@@ -28,7 +36,7 @@ void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
     {
         if (this->GetCurrentState()->StateId() == StartStateId)
         {
-            this->ChangeState(&OpponentSearchState, owner);
+            this->ChangeState(this->Search, actor);
             return;
         }
     }
@@ -37,7 +45,7 @@ void ProbabilityAI::Update(ActionResult result, BattleShipOpponent * owner)
     {
         if (this->GetCurrentState()->StateId() == AttackStateId)
         {
-            this->ChangeState(&OpponentSearchState, owner);
+            this->ChangeState(this->Search, actor);
             return;
         }
     }

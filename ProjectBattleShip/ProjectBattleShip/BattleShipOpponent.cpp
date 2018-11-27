@@ -8,8 +8,9 @@
 #include <map>
 
 BattleShipOpponent::BattleShipOpponent(
-    AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, ActionResult> * ai_module,
-    std::map<int, std::pair<Ship*, bool>> ships,
+    std::shared_ptr<AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>,
+        ActionResult>> ai_module,
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> ships,
     int id)
     : BaseEntity(id)
 {
@@ -19,26 +20,44 @@ BattleShipOpponent::BattleShipOpponent(
     this->placed_ships = 0;
 }
 
+BattleShipOpponent::BattleShipOpponent(BattleShipOpponent const &other)
+{
+    this->ships        = other.ships;
+    this->ai_module    = other.ai_module;
+    this->ship_id      = other.ship_id;
+    this->placed_ships = other.placed_ships;
+}
+
+BattleShipOpponent::BattleShipOpponent(BattleShipOpponent && other)
+{ 
+    this->ships        = std::move(other.ships);
+    this->ai_module    = std::move(other.ai_module);
+    this->ship_id      = std::move(other.ship_id);
+    this->placed_ships = std::move(other.placed_ships);
+}
+
 BattleShipOpponent::~BattleShipOpponent()
 {
-    if (this->ai_module)
-    {
-        delete this->ai_module;
-    }
 }
 
 void BattleShipOpponent::ReadResult(ActionResult result)
 {
     this->action_results.push_back(result);
-    this->ai_module->Update(result, this);
+    this->ai_module->Update(
+        result,
+        std::shared_ptr<BattleShipOpponent>(this->shared_from_this()));
 }
 
 std::pair<OpponentAction, Coordinates> BattleShipOpponent::GetAction()
 {
-    return this->ai_module->Execute(this);
+    this->critical_section.lock();
+    auto value = this->ai_module->Execute(this->shared_from_this());
+    this->critical_section.unlock();
+
+    return value;
 }
 
-std::map<int, std::pair<Ship*, bool>> const & BattleShipOpponent::GetShips()
+std::map<int, std::pair<std::shared_ptr<Ship>, bool>> const & BattleShipOpponent::GetShips()
 {
     return this->ships;
 }

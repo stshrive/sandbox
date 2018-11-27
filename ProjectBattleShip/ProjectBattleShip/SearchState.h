@@ -1,11 +1,12 @@
 #ifndef OPPONENT_SEARCH_STATE_H_
 #define OPPONENT_SEARCH_STATE_H_
 
-#include "HitProbability.h"
+#include "Probability.h"
+#include "coord.h"
 #include "State.h"
-#include <vector>
 
-class BattleShipOpponent;
+#include <memory>
+#include <vector>
 
 constexpr char SearchStateId[] = "SearchState";
 

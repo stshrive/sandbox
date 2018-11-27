@@ -4,17 +4,19 @@
 #include "coord.h"
 #include "BaseEntity.h"
 #include "State.h"
+#include "Ships.h"
+
+#include <memory>
 #include <vector>
 #include <map>
+#include <mutex>
 
-template<typename owner_ty_, typename execution_ty_, typename update_ty_>
+template<typename actor_ty_, typename execution_ty_, typename update_ty_>
 class AIModule;
 
 class StartState;
 class SearchState;
 class AttackState;
-
-class Ship;
 
 enum ActionResult
 {
@@ -38,16 +40,21 @@ enum OpponentAction
     , MoveFlag   = 0x100
 };
 
-class BattleShipOpponent : public BaseEntity
+class BattleShipOpponent
+    : public BaseEntity
+    , public std::enable_shared_from_this<BattleShipOpponent>
 {
 private:
     int ship_id;
-    std::map<int, std::pair<Ship*, bool>> ships;
+    
+    std::mutex critical_section;
+
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> ships;
 	std::vector<std::pair<OpponentAction, Coordinates>> action_sequence;
-    AIModule<
-        BattleShipOpponent,
-        std::pair<OpponentAction,Coordinates>,
-        ActionResult> * ai_module;
+    
+    std::shared_ptr<AIModule<BattleShipOpponent,
+            std::pair<OpponentAction,Coordinates>,
+            ActionResult>> ai_module;
 
     std::vector<ActionResult> action_results;
 
@@ -59,16 +66,22 @@ protected:
 
 public:
     BattleShipOpponent(
-        AIModule<BattleShipOpponent, std::pair<OpponentAction, Coordinates>, ActionResult>*,
-        std::map<int, std::pair<Ship*, bool>>,
+        std::shared_ptr<
+            AIModule<BattleShipOpponent,
+                std::pair<OpponentAction, Coordinates>,
+                ActionResult>>,
+        std::map<int, std::pair<std::shared_ptr<Ship>, bool>>,
         int);
+
+    BattleShipOpponent(BattleShipOpponent const &);
+    BattleShipOpponent(BattleShipOpponent &&);
 
     virtual ~BattleShipOpponent();
 
     void ReadResult(ActionResult result);
     virtual std::pair<OpponentAction, Coordinates> GetAction();
 
-    std::map<int, std::pair<Ship*, bool>> const & GetShips();
+    std::map<int, std::pair<std::shared_ptr<Ship>, bool>> const & GetShips();
     std::vector<std::pair<OpponentAction, Coordinates>> const & GetActionSequence();
     void AddAction(OpponentAction action, Coordinates const & coordinate);
     

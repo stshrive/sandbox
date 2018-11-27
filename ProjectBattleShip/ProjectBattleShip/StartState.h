@@ -3,6 +3,8 @@
 
 #include "State.h"
 
+#include <memory>
+
 class BattleShipOpponent;
 
 constexpr char StartStateId[] = "StartState";

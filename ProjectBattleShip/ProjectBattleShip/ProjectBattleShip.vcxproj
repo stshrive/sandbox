@@ -81,6 +81,7 @@
     <ClCompile Include="BattleShipOpponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Opponent.cpp" />
     <ClCompile Include="OpponentStates.cpp" />
     <ClCompile Include="ProbabilityAI.cpp" />
     <ClCompile Include="HitProbability.cpp" />
