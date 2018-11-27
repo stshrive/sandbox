@@ -1,8 +1,11 @@
 #ifndef OPPONENT_ATTACK_STATE_H_
 #define OPPONENT_ATTACK_STATE_H_
 
-#include "HitProbability.h"
+#include "Probability.h"
+#include "coord.h"
 #include "State.h"
+
+#include <memory>
 #include <vector>
 
 class BattleShipOpponent;
