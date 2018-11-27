@@ -10,9 +10,48 @@
 
 static std::vector<OpponentAction> actions = {
       OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveDown
+    , OpponentAction::MoveLeft
+    , OpponentAction::MoveLeft
+    , OpponentAction::MoveLeft
+    , OpponentAction::MoveLeft
     , OpponentAction::MoveLeft
     , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
+    , OpponentAction::MoveRight
     , OpponentAction::MoveUp
+    , OpponentAction::MoveUp
+    , OpponentAction::MoveUp
+    , OpponentAction::MoveUp
+    , OpponentAction::MoveUp
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
+    , OpponentAction::RotateShip
     , OpponentAction::RotateShip
     , OpponentAction::PlaceShip
 };
