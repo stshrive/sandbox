@@ -110,6 +110,10 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam
                 if (OpponentGrid[y][x] != WATER && OpponentGrid[y][x] != MISS)
                 {
                     OpponentGrid[y][x] = HIT;
+                    for (auto i = 0ull; i < OpponentShips.size(); ++i)
+                    {
+                        OpponentShips.at(i).first->GetSunkStatus(OpponentGrid);
+                    }
                 }
                 else
                 {
