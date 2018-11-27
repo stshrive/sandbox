@@ -8,9 +8,14 @@ private:
 	static int m_iNextValidID;
 	void SetID(int value);
 public:
+    BaseEntity()
+    {
+        this->SetID(m_iNextValidID);
+    }
+
 	BaseEntity(int id)
 	{
-		SetID(id);
+		this->SetID(id);
 	}
 
 	virtual ~BaseEntity(){;}
