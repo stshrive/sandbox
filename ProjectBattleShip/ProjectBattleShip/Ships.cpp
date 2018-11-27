@@ -1,4 +1,8 @@
 #include"Ships.h"
+#include"tiledefs.h"
+
+int Ship::HORIZONTAL = false;
+int Ship::VERTICAL   = true;
 
 Ship::Ship(int size, int graphic_base)
 {
@@ -28,7 +32,9 @@ Ship::Ship(int size, int graphic_base)
 
     for (int i = 0; i < this->size; i++)
     {
-        this->SourceIds[2][i] = this->graphic_base + i + 10;
+        this->SourceIds[2][i] = this->graphic_base
+            + i
+            + 10;
     }
 
     for (int i = 0; i < this->size; i++)
@@ -165,7 +171,7 @@ void Ship::Move(int up_down, int left_right, int PlacementGrid[][11])
 {
     if (up_down != 0 || left_right != 0)
     {
-        if (GetDirection() == VERTICAL) {
+        if (this->GetDirection() == VERTICAL) {
             if (up_down < 0 && 1 <= (pos.tl.y + up_down) && (pos.tl.y + up_down) <= 10 &&
                 PlacementGrid[pos.tl.y + up_down][pos.tl.x] == WATER) {
                 for (int i = pos.tl.y + up_down, k = pos.tl.x; i < pos.br.y; i++)
@@ -195,7 +201,7 @@ void Ship::Move(int up_down, int left_right, int PlacementGrid[][11])
                 pos.br.x = pos.br.x + left_right;
             }
         }
-        if (GetDirection() == HORIZONTAL) {
+        if (this->GetDirection() == HORIZONTAL) {
             if (up_down < 0 || up_down > 0
                 && 1 <= (pos.tl.y + up_down) && (pos.br.y + up_down) <= 10) {
                 for (int i = pos.tl.x; i <= pos.br.x; i++)
@@ -238,9 +244,9 @@ inline bool Ship::GetPositionedStatus() const
     return positioned;
 }
 
-inline bool Ship::GetDirection() const
+inline int Ship::GetDirection() const
 {
-    return vertical;
+    return (int)vertical;
 }
 
 Position const & Ship::GetPos() const

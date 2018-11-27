@@ -1,9 +1,7 @@
 #ifndef _SHIPS
 #define _SHIPS
 
-#include<Windows.h>
 #include"BitMapObj.h"
-#include"tiledefs.h"
 
 struct Position
 {
@@ -11,9 +9,6 @@ struct Position
 	POINT br;//the bottom and right of a ship
     int Orientation;
 };
-
-#define VERTICAL   1
-#define HORIZONTAL 0
 
 class Ship 
 {
@@ -25,7 +20,7 @@ public:
 	virtual void Move(int up_down, int left_right, int PlacementGrid[][11]);
 	virtual void SetPositionedStatus();
 	virtual bool GetPositionedStatus() const;
-	virtual bool GetDirection() const;
+	virtual int  GetDirection() const;
 	virtual bool GetSunkStatus(int PlacementGrid[][11]) const;
 	virtual Position const & GetPos() const;
     virtual int const GetSize() const;
@@ -43,6 +38,9 @@ protected:
     bool initialized;
     int NWSE;
     int * SourceIds[4];
+
+    static int HORIZONTAL;
+    static int VERTICAL;
 };
 
 class Carrier : public Ship
