@@ -53,9 +53,12 @@ void AttackState::Execute(std::shared_ptr<BattleShipOpponent> entity)
         }
         else
         {
-            for (Coordinates neighbor : this->find_neighbors(current, hits, traversed, choices))
+            if (choices.empty())
             {
-                candidates.push(neighbor);
+                for (Coordinates neighbor : this->find_neighbors(current, hits, traversed))
+                {
+                    candidates.push(neighbor);
+                }
             }
         }
     }
@@ -75,8 +78,7 @@ void AttackState::Exit(std::shared_ptr<BattleShipOpponent> entity)
 std::vector<Coordinates> AttackState::find_neighbors(
     Coordinates const & position,
     std::vector<Coordinates> const & hits,
-    std::vector<Coordinates> const & traversed,
-    std::vector<Coordinates> const & choices)
+    std::vector<Coordinates> const & traversed)
 {
     std::vector<Coordinates> neighbors;
     unsigned x_start = (position.x - 1 > position.x) ? 0 : position.x - 1;
@@ -96,7 +98,7 @@ std::vector<Coordinates> AttackState::find_neighbors(
                 {
                     neighbors.push_back(neighbor);
                 }
-                else if (choices.empty())
+                else
                 {
                     bool seen = false;
                     for (size_t i = 0; i < traversed.size(); ++i)
