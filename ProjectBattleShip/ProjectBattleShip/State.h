@@ -2,8 +2,9 @@
 #define PB_BASE_STATE_H_
 
 #include <string>
+#include <memory>
 
-template<class owner_ty_>
+template<class actor_ty_>
 class State
 {
 protected:
@@ -15,9 +16,9 @@ public:
 
     virtual ~State() {}
 
-	virtual void Enter  (std::shared_ptr<owner_ty_>)=0;
-	virtual void Execute(std::shared_ptr<owner_ty_>)=0;
-	virtual void Exit   (std::shared_ptr<owner_ty_>)=0;
+	virtual void Enter  (std::shared_ptr<actor_ty_>)=0;
+	virtual void Execute(std::shared_ptr<actor_ty_>)=0;
+	virtual void Exit   (std::shared_ptr<actor_ty_>)=0;
 
     virtual std::string StateId() const final
     {
