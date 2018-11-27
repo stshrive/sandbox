@@ -51,9 +51,6 @@
     <ClCompile Include="SearchState.cpp">
       <Filter>Source Files\Opponent</Filter>
     </ClCompile>
-    <ClCompile Include="OpponentStates.cpp">
-      <Filter>Source Files\Opponent</Filter>
-    </ClCompile>
     <ClCompile Include="HitProbability.cpp">
       <Filter>Source Files\Opponent</Filter>
     </ClCompile>
