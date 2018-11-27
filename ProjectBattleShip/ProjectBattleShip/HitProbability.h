@@ -1,6 +1,8 @@
 #ifndef PB_PROBABILITY_DENSITY_H_
 #define PB_PROBABILITY_DENSITY_H_
 
+#include <mutex>
+
 #include "coord.h"
 #include "Probability.h"
 
@@ -14,6 +16,8 @@ class HitProbability
     : public IProbability<int, Coordinates>
 {
 private:
+    std::mutex critical_section;
+
 	int ship_2_[10][10];
 	int ship_3a[10][10];
 	int ship_3b[10][10];
@@ -26,13 +30,13 @@ private:
     static int _4[];
     static int _5[];
 
-    int dimensions;
+    unsigned dimensions;
 	
-	void ChangeProbability(int m[][10], const int Length, XY p);
+	void ChangeProbability(int m[][10], const unsigned Length, XY p);
     void Update();
 
 public:
-    HitProbability(int mapsize);
+    HitProbability(unsigned mapsize);
    ~HitProbability();
     HitProbability(HitProbability const &);
     HitProbability(HitProbability&&);

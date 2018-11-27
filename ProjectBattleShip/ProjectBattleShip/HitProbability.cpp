@@ -6,7 +6,7 @@ int HitProbability::_3[] = { 1,2,3,3,3,3,3,3,2,1 };
 int HitProbability::_4[] = { 1,2,3,4,4,4,4,3,2,1 };
 int HitProbability::_5[] = { 1,2,3,4,5,5,4,3,2,1 };
 
-HitProbability::HitProbability(int mapsize)
+HitProbability::HitProbability(unsigned mapsize)
 {
     this->dimensions = mapsize;
     this->Init();
@@ -14,9 +14,9 @@ HitProbability::HitProbability(int mapsize)
 
 void HitProbability::Init()
 {
-	for(int i=0; i < this->dimensions; i++)
+	for(unsigned i=0; i < this->dimensions; i++)
 	{
-		for(int j=i; j< this->dimensions; j++)
+		for(unsigned j=i; j< this->dimensions; j++)
 		{
 			ship_2_[i][j] = _2[i] + _2[j];
 			ship_2_[j][i] = _2[i] + _2[j];
@@ -42,8 +42,10 @@ HitProbability::~HitProbability() {}
 
 void HitProbability::Update()
 {
-	for(int i = 0; i < this->dimensions; i++){
-		for(int j = 0; j < this->dimensions; j++)
+    this->critical_section.lock();
+
+	for(unsigned i = 0; i < this->dimensions; i++){
+		for(unsigned j = 0; j < this->dimensions; j++)
 			Master[i][j] = (
                   this->ship_2_[i][j]
                 + this->ship_3a[i][j]
@@ -51,10 +53,14 @@ void HitProbability::Update()
                 + this->ship_4_[i][j]
                 + this->ship_5_[i][j]);
 	}
+
+    this->critical_section.unlock();
 }
 
 void HitProbability::Update(XY position)
 {
+    this->critical_section.lock();
+
     if (position.x >= 0 && position.y >= 0)
     {
         this->ChangeProbability(ship_2_, _TWO  , position);
@@ -63,18 +69,27 @@ void HitProbability::Update(XY position)
         this->ChangeProbability(ship_4_, _FOUR , position);
         this->ChangeProbability(ship_5_, _FIVE , position);
     }
+
+    this->critical_section.unlock();
     this->Update();
 }
 
 int HitProbability::GetProbability(XY position)
 {
-    return this->Master[position.y][position.x];
+    if (position.x >= this->dimensions || position.y >= this->dimensions)
+    {
+        return 0;
+    }
+    else
+    {
+        return this->Master[position.y][position.x];
+    }
 }
 
-void HitProbability::ChangeProbability(int m[][10], const int Length, XY p)
+void HitProbability::ChangeProbability(int m[][10], const unsigned Length, XY p)
 {
 	m[p.y][p.x] = 0;
-	for(int i = 0; i < Length; i++)
+	for(unsigned i = 0; i < Length; i++)
 	{
 		if(p.y + i < this->dimensions)
         {
