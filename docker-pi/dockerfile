@@ -1,0 +1,34 @@
+FROM resin/rpi-raspbian
+
+RUN apt-get -qqq update
+
+RUN apt-get -qqq install -y --no-install-recommends\
+        git \
+        vim \
+    && curl -o /usr/src/git-prompt.sh \
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+
+ARG PI_PASSWD
+
+RUN useradd pi \
+        --create-home \
+        --shell /bin/bash \
+        --system \
+    && echo pi:$PI_PASSWD | chpasswd \
+    && usermod -aG sudo pi
+
+
+USER pi
+WORKDIR /home/pi
+
+RUN git init . \
+    && git remote add origin https://github.com/stshrive/environment.git \
+    && git fetch \
+    && git checkout -f origin/master \
+    && git checkout master \
+    && echo "source /usr/src/git-prompt.sh" >> .bashrc
+
+ENV TERM xterm-256color
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["bash"]
