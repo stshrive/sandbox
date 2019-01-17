@@ -1,0 +1,43 @@
+FROM ubuntu
+
+RUN apt-get update -y
+
+RUN apt-get install --no-install-recommends -y \
+    pkg-config \
+    autoconf \
+    automake \
+    ca-certificates \
+    check \
+    g++ \
+    gengetopt \
+    git \
+    help2man \
+    libhidapi-dev \
+    libhidapi-hidraw0 \
+    libjson-c-dev \
+    libssl-dev \
+    libtool \
+    make
+
+WORKDIR /u2f
+
+RUN git clone https://github.com/Yubico/libu2f-host.git ./host \
+    && git clone https://github.com/Yubico/libu2f-server.git ./server
+
+WORKDIR /u2f/host
+RUN ./autogen.sh \
+    && ./configure --disable-gtk-doc \
+    && make \
+    && make check \
+    && make install
+
+WORKDIR /u2f/server
+RUN ./autogen.sh \
+    && ./configure --disable-gtk-doc \
+    && make \
+    && make check \
+    && make install
+
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
+
+WORKDIR /u2f-reader
