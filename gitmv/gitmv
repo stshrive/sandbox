@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# Script to move one repository's *master* branch to another.
+# This will create a temporary branch requiring a manual merge.
+#
+
+# Check for our source and destination repositories.
+# These arguments should be provided as URLs needed
+# to trun git clone commands
+#
+while getopts ":s:d:" opt; do
+    case $opt in
+        s) source_repo="$OPTARG"
+            ;;
+        d) destination_repo="$OPTARG"
+            ;;
+        \?) echo "Invalid argument -$OPTARG" >&2
+            ;;
+    esac
+done
+
+if [[ -z "$source_repo" || -z "$destination_repo" ]]; then
+    echo "missing required arguments"
+    echo "-s <SOURCE_REPO_REMOTE_URL>"
+    echo "-d <DESTINATION_REPO_REMOTE_URL>"
+    return 1
+fi
+
+# Create a temporary directory for our git commands to take place in.
+# This command ignores errors if -t is not set as this default should
+# work on linux machines. If it fails, add a -t flag to set a template
+# prefix for Macs
+#
+GITMV_TEMPDIR=$(mktemp -d 2>/dev/null || mktemp -d -t ".gitmv_temp")
+
+if [[ -z "$GITMV_TEMPDIR" || ! -d "$GITMV_TEMPDIR" ]]; then
+    echo "Failed to create working directory"
+    exit 1
+fi
+
+finish()
+{
+    popd > /dev/null
+    rm -rf "$GITMV_TEMPDIR"
+    unset -f finish
+}
+
+trap finish EXIT
+
+pushd $GITMV_TEMPDIR > /dev/null
+
+MV_BRANCH=gitmv/${RANDOM}${RANDOM}
+
+git clone $destination_repo .
+git checkout -b ${MV_BRANCH}
+git remote add source_remote $source_repo
+git fetch source_remote
+git merge source_remote/master --allow-unrelated-histories
+git push -u origin ${MV_BRANCH}
