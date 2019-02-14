@@ -6,7 +6,7 @@
 
 # Check for our source and destination repositories.
 # These arguments should be provided as URLs needed
-# to trun git clone commands
+# to run git clone commands
 #
 while getopts ":s:d:" opt; do
     case $opt in
